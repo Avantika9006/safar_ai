@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up — SafarAI</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/static/css/signup.css">
+</head>
+
+
+<body>
+
+    <!-- LEFT SIDE -->
+
+    <section class="signup-visual">
+
+        <div class="visual-overlay"></div>
+
+        <div class="visual-content">
+
+            <a href="/index.html" class="logo">
+                Safar<span>AI</span>
+            </a>
+
+
+            <div class="visual-text">
+
+                <span class="tag">
+                    YOUR JOURNEY STARTS HERE
+                </span>
+
+                <h1>
+                    Travel
+                    <em>smarter.</em>
+                </h1>
+
+                <p>
+                    Create your SafarAI account and let
+                    intelligent travel planning turn your
+                    ideas into unforgettable journeys.
+                </p>
+
+            </div>
+
+
+            <div class="visual-bottom">
+
+                <div class="travel-icons">
+                    <span>✈</span>
+                    <span>🌍</span>
+                    <span>🧭</span>
+                </div>
+
+                <p>
+                    Plan smarter. Explore more.
+                    Travel your way.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- RIGHT SIDE -->
+
+    <section class="signup-section">
+
+        <div class="signup-container">
+
+
+            <!-- MOBILE LOGO -->
+
+            <a href="/index.html" class="mobile-logo">
+                Safar<span>AI</span>
+            </a>
+
+
+            <!-- HEADER -->
+
+            <div class="signup-header">
+
+                <span class="section-label">
+                    CREATE ACCOUNT
+                </span>
+
+                <h2>
+                    Start your
+                    <em>journey.</em>
+                </h2>
+
+                <p>
+                    Create an account to unlock
+                    personalized travel experiences.
+                </p>
+
+            </div>
+
+
+
+            <!-- GOOGLE -->
+
+            <button class="google-btn">
+
+                <i class="fa-brands fa-google"></i>
+
+                Continue with Google
+
+            </button>
+
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+
+                <span></span>
+
+                <p>or sign up with email</p>
+
+                <span></span>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form action="/index.html">
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full name
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email address
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-regular fa-envelope"></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword">
+
+                            <i class="fa-regular fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm password
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TERMS -->
+
+                <div class="terms-check">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <span>
+                            I agree to the
+                            <a href="#">Terms</a>
+                            and
+                            <a href="#">Privacy Policy</a>
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="signup-submit">
+
+                    Create my SafarAI account
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="signupMessage"
+                    class="signup-message">
+                </div>
+
+            </form>
+
+
+
+            <!-- LOGIN -->
+
+            <div class="login-link">
+
+                <p>
+
+                    Already have an account?
+
+                    <a href="login.html">
+                        Log in
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="/static/javaScript/signup.js"></script>
+
+</body>
+
+</html>

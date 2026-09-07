@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login — SafarAI</title>
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="/static/css/login.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= LEFT SIDE ================= -->
+
+<section class="login-visual">
+
+    <div class="visual-overlay"></div>
+
+    <div class="visual-content">
+
+        <a href="/index.html" class="logo">
+            Safar<span>AI</span>
+        </a>
+
+
+        <div class="visual-text">
+
+            <span class="tag">
+                YOUR NEXT ADVENTURE
+            </span>
+
+            <h1>
+                The world is
+                <em>waiting.</em>
+            </h1>
+
+            <p>
+                Sign in to continue planning your
+                next unforgettable journey.
+            </p>
+
+        </div>
+
+
+        <div class="visual-bottom">
+
+            <div class="mini-avatars">
+                <span>R</span>
+                <span>A</span>
+                <span>P</span>
+                <span>+</span>
+            </div>
+
+            <p>
+                Join thousands of travelers
+                discovering the world differently.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= RIGHT SIDE ================= -->
+
+<section class="login-section">
+
+    <div class="login-container">
+
+
+        <!-- Mobile Logo -->
+
+        <a href="/index.html" class="mobile-logo">
+            Safar<span>AI</span>
+        </a>
+
+
+        <!-- Heading -->
+
+        <div class="login-header">
+
+            <span class="section-label">
+                WELCOME BACK
+            </span>
+
+            <h2>
+                Ready to
+                <em>Safar?</em>
+            </h2>
+
+            <p>
+                Log in to access your trips and
+                continue your journey.
+            </p>
+
+        </div>
+
+
+        <!-- Google Login -->
+
+        <button class="google-btn">
+
+            <i class="fa-brands fa-google"></i>
+
+            Continue with Google
+
+        </button>
+
+
+        <!-- Divider -->
+
+        <div class="divider">
+
+            <span></span>
+
+            <p>or continue with email</p>
+
+            <span></span>
+
+        </div>
+
+
+        <!-- Login Form -->
+
+        <form action="/index.html">
+
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email address
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <div class="password-label">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <a href="#">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="password-toggle"
+                        id="togglePassword"
+                    >
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Remember -->
+
+            <div class="remember">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        id="remember"
+                    >
+
+                    <span>
+                        Remember me
+                    </span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- Login Button -->
+
+            <button 
+                type="submit"
+                class="login-submit"
+            >
+
+                Login to SafarAI
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <!-- Message -->
+
+            <div
+                class="login-message"
+                id="loginMessage"
+            ></div>
+
+        </form>
+
+
+
+        <!-- Register -->
+
+        <div class="register">
+
+            <p>
+                Don't have an account?
+                <a href="signup.html">
+                    Create one
+                </a>
+            </p>
+
+        </div>
+
+
+        <!-- Terms -->
+
+        <p class="terms">
+
+            By continuing, you agree to our
+            <a href="#">Terms</a>
+            and
+            <a href="#">Privacy Policy</a>.
+
+        </p>
+
+
+    </div>
+
+</section>
+
+
+
+<script src="/static/javaScript/login.js"></script>
+
+</body>
+
+</html>

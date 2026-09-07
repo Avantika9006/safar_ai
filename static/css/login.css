@@ -1,0 +1,802 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+
+    --dark: #151714;
+
+    --cream: #f7f5ef;
+
+    --orange: #ef7045;
+
+    --muted: #77776f;
+
+    --border: #deddd5;
+
+    --white: #ffffff;
+
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    font-family: "DM Sans", sans-serif;
+
+    background: var(--cream);
+
+    color: var(--dark);
+
+}
+
+
+button,
+input {
+
+    font-family: inherit;
+
+}
+
+
+button {
+
+    cursor: pointer;
+
+}
+
+
+a {
+
+    text-decoration: none;
+
+    color: inherit;
+
+}
+
+
+
+/* =========================
+   LEFT VISUAL
+========================= */
+
+.login-visual {
+
+    min-height: 100vh;
+
+    position: relative;
+
+    overflow: hidden;
+
+    color: white;
+
+    background-image:
+        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=90");
+
+    background-size: cover;
+
+    background-position: center;
+
+}
+
+
+.visual-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.25),
+            rgba(0,0,0,0.82)
+        );
+
+}
+
+
+.visual-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    height: 100%;
+
+    min-height: 100vh;
+
+    padding: 45px 55px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+}
+
+
+.logo,
+.mobile-logo {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+}
+
+
+.logo span,
+.mobile-logo span {
+
+    color: var(--orange);
+
+}
+
+
+/* =========================
+   VISUAL TEXT
+========================= */
+
+.visual-text {
+
+    max-width: 560px;
+
+}
+
+
+.tag,
+.section-label {
+
+    color: #f28a67;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+}
+
+
+.visual-text h1 {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(55px, 6vw, 90px);
+
+    line-height: 0.95;
+
+    letter-spacing: -3px;
+
+    margin: 20px 0;
+
+}
+
+
+.visual-text h1 em {
+
+    color: #ffe000;
+
+    font-style: italic;
+
+    font-weight: 500;
+
+}
+
+
+.visual-text p {
+
+    max-width: 440px;
+
+    color: rgba(255,255,255,0.75);
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================
+   VISUAL BOTTOM
+========================= */
+
+.visual-bottom {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+}
+
+
+.visual-bottom p {
+
+    max-width: 300px;
+
+    color: rgba(255,255,255,0.65);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+.mini-avatars {
+
+    display: flex;
+
+}
+
+
+.mini-avatars span {
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    background: var(--orange);
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    border: 2px solid white;
+
+    margin-left: -8px;
+
+}
+
+
+.mini-avatars span:first-child {
+
+    margin-left: 0;
+
+}
+
+
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.login-section {
+
+    min-height: 100vh;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 50px;
+
+}
+
+
+.login-container {
+
+    width: 100%;
+
+    max-width: 450px;
+
+}
+
+
+.mobile-logo {
+
+    display: none;
+
+    margin-bottom: 50px;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.login-header {
+
+    margin-bottom: 32px;
+
+}
+
+
+.login-header h2 {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 52px;
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+
+    margin: 12px 0 15px;
+
+}
+
+
+.login-header h2 em {
+
+    color: var(--orange);
+
+    font-style: italic;
+
+    font-weight: 500;
+
+}
+
+
+.login-header p {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+}
+
+
+
+/* =========================
+   GOOGLE BUTTON
+========================= */
+
+.google-btn {
+
+    width: 100%;
+
+    height: 54px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-weight: 600;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+
+}
+
+
+.google-btn i {
+
+    font-size: 17px;
+
+}
+
+
+.google-btn:hover {
+
+    border-color: #aaa;
+
+    transform: translateY(-2px);
+
+}
+
+
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin: 27px 0;
+
+}
+
+
+.divider span {
+
+    height: 1px;
+
+    background: var(--border);
+
+    flex: 1;
+
+}
+
+
+.divider p {
+
+    color: #999;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+}
+
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+
+    margin-bottom: 21px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 9px;
+
+}
+
+
+.password-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+}
+
+
+.password-label label {
+
+    margin-bottom: 9px;
+
+}
+
+
+.password-label a {
+
+    font-size: 11px;
+
+    color: var(--orange);
+
+    font-weight: 600;
+
+}
+
+
+.input-box {
+
+    height: 55px;
+
+    border: 1px solid var(--border);
+
+    background: white;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 16px;
+
+    transition: 0.3s;
+
+}
+
+
+.input-box:focus-within {
+
+    border-color: var(--orange);
+
+    box-shadow:
+        0 0 0 3px rgba(239,112,69,0.08);
+
+}
+
+
+.input-box > i {
+
+    color: #999;
+
+    font-size: 14px;
+
+}
+
+
+.input-box input {
+
+    width: 100%;
+
+    height: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    font-size: 14px;
+
+}
+
+
+.input-box input::placeholder {
+
+    color: #aaa;
+
+}
+
+
+.password-toggle {
+
+    background: transparent;
+
+    color: #999;
+
+    font-size: 15px;
+
+}
+
+
+
+/* =========================
+   REMEMBER
+========================= */
+
+.remember {
+
+    margin: 4px 0 25px;
+
+}
+
+
+.remember label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #777;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+}
+
+
+.remember input {
+
+    accent-color: var(--orange);
+
+}
+
+
+
+/* =========================
+   SUBMIT
+========================= */
+
+.login-submit {
+
+    width: 100%;
+
+    height: 55px;
+
+    border-radius: 100px;
+
+    background: var(--dark);
+
+    color: white;
+
+    font-weight: 600;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 13px;
+
+    transition: 0.3s;
+
+}
+
+
+.login-submit:hover {
+
+    background: var(--orange);
+
+    transform: translateY(-2px);
+
+}
+
+
+.login-message {
+
+    min-height: 20px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    color: var(--orange);
+
+    font-size: 12px;
+
+}
+
+
+
+/* =========================
+   REGISTER
+========================= */
+
+.register {
+
+    text-align: center;
+
+    margin-top: 28px;
+
+}
+
+
+.register p {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.register a {
+
+    color: var(--orange);
+
+    font-weight: 700;
+
+}
+
+
+
+/* =========================
+   TERMS
+========================= */
+
+.terms {
+
+    margin-top: 45px;
+
+    color: #999;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+
+    text-align: center;
+
+}
+
+
+.terms a {
+
+    color: #555;
+
+}
+
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    body {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .login-visual {
+
+        display: none;
+
+    }
+
+
+    .login-section {
+
+        min-height: 100vh;
+
+        padding: 35px 25px;
+
+    }
+
+
+    .mobile-logo {
+
+        display: block;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .login-section {
+
+        padding: 30px 20px;
+
+    }
+
+
+    .login-header h2 {
+
+        font-size: 43px;
+
+    }
+
+
+    .mobile-logo {
+
+        font-size: 28px;
+
+        margin-bottom: 70px;
+
+    }
+
+}

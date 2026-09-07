@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- =========================
+         BASIC SEO
+    ========================== -->
+
+    <title>SafarAI – Travel Beyond the Crowd | AI Travel Planner</title>
+
+    <meta
+        name="description"
+        content="Plan smarter journeys with SafarAI. Discover destinations, create personalized travel plans, explore unique experiences, and travel beyond the crowd."
+    >
+
+    <meta
+        name="keywords"
+        content="SafarAI, Safar AI, AI travel planner, personalized travel planner, trip planner, travel itinerary, AI travel assistant, travel destinations, travel experiences, India travel, adventure travel, solo travel, family travel, budget travel, smart travel planning"
+    >
+
+    <meta name="author" content="SafarAI">
+
+    <meta name="robots" content="index, follow">
+
+    <meta name="theme-color" content="#ffffff">
+      
+    <meta name="google-site-verification" content="EI1iKzN2gcad5tQaXbq9JM5JD6CEstOsiCiM52ZZVPM" />
+
+    <!-- =========================
+         CANONICAL
+    ========================== -->
+
+    <link
+        rel="canonical"
+        href="https://safarai-cyan.vercel.app/"
+    >
+
+
+    <!-- =========================
+         FAVICON
+    ========================== -->
+
+    <link
+        rel="icon"
+        href="/media/favicon.png"
+        type="image/png"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="/media/favicon.png"
+    >
+
+
+    <!-- =========================
+         OPEN GRAPH
+         Used when sharing website
+         on WhatsApp, Facebook, etc.
+    ========================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:title"
+        content="SafarAI – Travel Beyond the Crowd | AI Travel Planner"
+    >
+
+    <meta
+        property="og:description"
+        content="Discover destinations, plan personalized trips, and explore unique travel experiences with SafarAI."
+    >
+
+    <meta
+        property="og:url"
+        content="https://safarai-cyan.vercel.app/"
+    >
+
+    <meta
+        property="og:site_name"
+        content="SafarAI"
+    >
+
+    <meta
+        property="og:image"
+        content="https://safarai-cyan.vercel.app/media/safarai-og-image.png"
+    >
+
+    <meta
+        property="og:image:alt"
+        content="SafarAI – Travel Beyond the Crowd"
+    >
+
+    <meta
+        property="og:image:type"
+        content="image/png"
+    >
+
+    <meta
+        property="og:image:width"
+        content="1200"
+    >
+
+    <meta
+        property="og:image:height"
+        content="630"
+    >
+
+
+    <!-- =========================
+         TWITTER / X
+    ========================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="SafarAI – Travel Beyond the Crowd"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Plan smarter journeys and travel beyond the crowd with SafarAI."
+    >
+
+    <meta
+        name="twitter:image"
+        content="https://safarai-cyan.vercel.app/media/safarai-og-image.png"
+    >
+
+    <meta
+        name="twitter:image:alt"
+        content="SafarAI – Travel Beyond the Crowd"
+    >
+
+
+    <!-- =========================
+         WEBSITE STRUCTURED DATA
+    ========================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "SafarAI",
+        "alternateName": "Safar AI",
+        "url": "https://safarai-cyan.vercel.app/"
+    }
+    </script>
+
+
+    <!-- =========================
+         ORGANIZATION STRUCTURED DATA
+    ========================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "SafarAI",
+        "url": "https://safarai-cyan.vercel.app/",
+        "logo": "https://safarai-cyan.vercel.app/media/favicon.png"
+    }
+    </script>
+
+
+    <!-- =========================
+         GOOGLE FONTS
+    ========================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================
+         BOOTSTRAP
+    ========================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================
+         FONT AWESOME
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- =========================
+         MAIN CSS
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="/static/css/homepage.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <a href="#" class="logo">
+            Safar<span>AI</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#destinations">Destinations </a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#planner">Plan Trip </a>
+            <a href="#stories">Travel Stories</a>
+        </nav>
+
+        <div class="nav-actions">
+            <form action="/static/html/login.html">
+                <button class="login-btn">Login</button>
+            </form>
+            <button class="nav-plan-btn" onclick="scrollToPlanner()">
+                Plan a trip
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <button class="menu-btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+    </header>
+
+
+    <!-- ================= MOBILE MENU ================= -->
+
+    <div class="mobile-menu" id="mobileMenu">
+
+        <a href="#destinations">Destinations</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#stories">Stories</a>
+
+        <button onclick="scrollToPlanner()">
+            Plan a trip
+        </button>
+
+    </div>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero" id="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-tag">
+                <span></span>
+                YOUR NEXT STORY STARTS HERE
+            </div>
+
+            <h1>
+                Travel
+                <em>beyond</em>
+                the Crowd
+            </h1>
+
+            <p>
+                Discover places that feel like they were made for you.
+                Build unforgettable journeys around the way you love to travel.
+            </p>
+
+            <button class="hero-btn" onclick="scrollToPlanner()">
+                Start your journey
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="hero-image">
+
+                <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
+                    alt="Mountain travel destination">
+
+                <div class="image-overlay"></div>
+
+            </div>
+
+
+            <div class="floating-card location-card">
+
+                <div class="small-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+                    <small>Trending now</small>
+                    <strong>Himachal Pradesh</strong>
+                </div>
+
+            </div>
+
+
+            <div class="floating-card rating-card">
+
+                <div class="avatars">
+                    <span>R</span>
+                    <span>A</span>
+                    <span>K</span>
+                </div>
+
+                <div>
+                    <strong>4.9/5</strong>
+                    <small>Loved by travelers</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+ <!-- ================= AI CHATBOX ================= -->
+
+     
+   <button id="aiChatButton" class="ai-chat-button">
+    <span>✈</span>
+</button>
+
+<div class="ai-chatbox" id="aiChatbox">
+
+    <div class="chat-header">
+        <div>
+            <strong>SafarAI</strong>
+            <small>Travel Assistant</small>
+        </div>
+
+        <button id="closeChat">×</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+
+        <div class="bot-message">
+            Hi! I'm SafarAI ✈️<br><br>
+            I can help you with destinations, hotels,
+            itineraries, transportation, travel safety
+            and more.
+        </div>
+
+    </div>
+
+    <div class="chat-input-area">
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Ask about your next trip..."
+        >
+
+        <button id="sendMessage">
+            ➤
+        </button>
+
+    </div>
+
+</div>
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats">
+
+        <div class="stat">
+            <strong data-target="50">0</strong>
+            <span>Destinations</span>
+        </div>
+
+        <div class="stat">
+            <strong data-target="12000">0</strong>
+            <span>Happy travelers</span>
+        </div>
+
+        <div class="stat">
+            <strong data-target="850">0</strong>
+            <span>Unique experiences</span>
+        </div>
+
+        <div class="stat">
+            <strong data-target="4.9">0</strong>
+            <span>Average rating</span>
+        </div>
+
+    </section>
+
+
+    <!-- ================= DESTINATIONS ================= -->
+
+    <section class="section destinations-section" id="destinations">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-label">EXPLORE</span>
+
+                <h2>
+                    Places worth
+                    <em>getting lost in.</em>
+                </h2>
+            </div>
+
+            <p>
+                From quiet mountain villages to colorful coastal escapes,
+                find a destination that matches your mood.
+            </p>
+
+        </div>
+
+
+        <div class="destination-grid">
+
+            <article class="destination-card large">
+
+                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1000&q=85"
+                    alt="Swiss mountains">
+
+                <div class="card-gradient"></div>
+
+                <div class="destination-info">
+                    <span>EUROPE</span>
+                    <h3>Swiss Alps</h3>
+                    <p>Mountains · Lakes · Adventure</p>
+                </div>
+
+                <button class="circle-arrow">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </button>
+
+            </article>
+
+
+            <article class="destination-card">
+
+                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=85"
+                    alt="Bali">
+
+                <div class="card-gradient"></div>
+
+                <div class="destination-info">
+                    <span>ASIA</span>
+                    <h3>Bali</h3>
+                    <p>Beaches · Culture · Wellness</p>
+                </div>
+
+                <button class="circle-arrow">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </button>
+
+            </article>
+
+
+            <article class="destination-card">
+
+                <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85"
+                    alt="India">
+
+                <div class="card-gradient"></div>
+
+                <div class="destination-info">
+                    <span>INDIA</span>
+                    <h3>Rajasthan</h3>
+                    <p>Heritage · Desert · Culture</p>
+                </div>
+
+                <button class="circle-arrow">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </button>
+
+            </article>
+
+        </div>
+
+
+        <button class="outline-btn">
+            Explore all destinations
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </section>
+
+
+    <section class="destination-section">
+
+        <h1>Places You'll Brag About Forever</h1>
+
+        <p class="subtitle">
+            From jaw-dropping landmarks to hidden gems, these are the kind of spots
+            that turn into stories, selfies, and serious travel envy.
+        </p>
+
+
+        <div class="slider-container">
+
+            <!-- LEFT BUTTON -->
+            <button class="slider-button prev" id="prevBtn">
+                &#10094;
+            </button>
+
+
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./media/pexels-efrem-efre-2786187-34010326.jpg" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5> Caryatids</h5>
+                            <p>the famous sculpted female figures serving as architectural columns on the Porch of the
+                                Erechtheion.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./media/pexels-jeffrey-czum-254391-2253445.jpg" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Sky High Adventure</h5>
+                            <p>Catch a glimpse of your next destination from above.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./media/pexels-pavel-podshivalov-75707297-8573643.jpg" class="d-block w-100"
+                            alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5> Dancers</h5>
+                            <p>a monumental 60-foot-tall public sculpture created by American artist Jonathan Borofsky.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <!-- ================= EXPERIENCES ================= -->
+
+            <section class="experiences" id="experiences">
+
+                <div class="experience-content">
+
+                    <span class="section-label">TRAVEL YOUR WAY</span>
+
+                    <h2>
+                        Your trip.
+                        <br>
+                        <em>Your rules.</em>
+                    </h2>
+
+                    <p>
+                        Whether you want adrenaline, peace, culture or simply
+                        a break from everything, choose the experience that
+                        feels right for you.
+                    </p>
+
+                    <button class="light-btn">
+                        Discover experiences
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="experience-list">
+
+                    <div class="experience-item active">
+
+                        <div class="experience-number">01</div>
+
+                        <div class="experience-title">
+                            <i class="fa-solid fa-person-hiking"></i>
+                            <span>Adventure</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+
+                    <div class="experience-item">
+
+                        <div class="experience-number">02</div>
+
+                        <div class="experience-title">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Culture & Heritage</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+
+                    <div class="experience-item">
+
+                        <div class="experience-number">03</div>
+
+                        <div class="experience-title">
+                            <i class="fa-solid fa-umbrella-beach"></i>
+                            <span>Slow Travel</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+
+                    <div class="experience-item">
+
+                        <div class="experience-number">04</div>
+
+                        <div class="experience-title">
+                            <i class="fa-solid fa-people-group"></i>
+                            <span>Family Escape</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= HOW IT WORKS ================= -->
+
+            <section class="section how-section" id="how-it-works">
+
+                <div class="center-heading">
+
+                    <span class="section-label">HOW IT WORKS</span>
+
+                    <h2>
+                        From idea to
+                        <em>itinerary.</em>
+                    </h2>
+
+                    <p>
+                        Planning a memorable trip shouldn't feel like a second job.
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="step-icon">
+                            <i class="fa-regular fa-compass"></i>
+                        </div>
+
+                        <span>01</span>
+
+                        <h3>Tell us what you love</h3>
+
+                        <p>
+                            Share your destination, travel style,
+                            budget and what you want to experience.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-line"></div>
+
+
+                    <div class="step">
+
+                        <div class="step-icon">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+
+                        <span>02</span>
+
+                        <h3>We build your journey</h3>
+
+                        <p>
+                            Our smart planning system creates a
+                            personalized travel plan around you.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-line"></div>
+
+
+                    <div class="step">
+
+                        <div class="step-icon">
+                            <i class="fa-solid fa-plane-departure"></i>
+                        </div>
+
+                        <span>03</span>
+
+                        <h3>You go explore</h3>
+
+                        <p>
+                            Pack your bags, follow the plan and
+                            make memories worth keeping.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= PLANNER ================= -->
+
+            <section class="planner-section" id="planner">
+
+                <div class="planner">
+
+                    <div class="planner-header">
+
+                        <span class="section-label">PLAN YOUR TRIP</span>
+
+                        <h2>
+                            Where will you
+                            <em>go next?</em>
+                        </h2>
+
+                        <p>
+                            Give us a few details and let's start building
+                            your perfect escape.
+                        </p>
+
+                    </div>
+
+
+                    <form id="travelForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label>Destination</label>
+
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    <input type="text" id="destination" placeholder="e.g. Manali" required>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Travel style</label>
+
+                                <div class="input-wrapper">
+
+                                    <i class="fa-solid fa-route"></i>
+
+                                    <select id="travelStyle">
+
+                                        <option value="">Choose a style</option>
+                                        <option>Adventure</option>
+                                        <option>Relaxation</option>
+                                        <option>Culture</option>
+                                        <option>Family</option>
+                                        <option>Solo</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Duration</label>
+
+                                <div class="input-wrapper">
+
+                                    <i class="fa-regular fa-calendar"></i>
+
+                                    <select id="duration">
+
+                                        <option value="">Choose duration</option>
+                                        <option>2 - 4 days</option>
+                                        <option>5 - 7 days</option>
+                                        <option>8 - 14 days</option>
+                                        <option>15+ days</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Travelers</label>
+
+                                <div class="input-wrapper">
+
+                                    <i class="fa-solid fa-users"></i>
+
+                                    <select id="travelers">
+
+                                        <option value="">Number of travelers</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3 - 5</option>
+                                        <option>6 - 10</option>
+                                        <option>10+</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit" class="planner-btn">
+
+                            Create my trip
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="form-message" id="formMessage"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= STORIES ================= -->
+
+            <section class="section stories-section" id="stories">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">TRAVEL STORIES</span>
+
+                        <h2>
+                            Loved by people
+                            <em>who Safar.</em>
+                        </h2>
+
+                    </div>
+
+                    <div class="story-arrows">
+
+                        <button id="prevStory">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+
+                        <button id="nextStory">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="testimonial-container">
+
+                    <div class="testimonial">
+
+                        <div class="quote">
+                            <i class="fa-solid fa-quote-left"></i>
+                        </div>
+
+                        <p id="testimonialText">
+                            "The best part was not having to spend hours
+                            figuring everything out. The trip felt completely
+                            personal."
+                        </p>
+
+                        <div class="traveler">
+
+                            <div class="traveler-avatar">
+                                A
+                            </div>
+
+                            <div>
+                                <strong id="travelerName">Ananya Sharma</strong>
+                                <span id="travelerTrip">Ladakh, India</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section>
+
+                <!-- ROW 1 -->
+                <div class="card-group">
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Agra - Taj Mahal">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Rajat Kumar</h5>
+                            <p class="card-text">
+                                "Finally got to see the Taj Mahal in person. Pictures really don't
+                                do justice to how beautiful this place feels. One of those moments
+                                I'll remember for a long time."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Goa Beach">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Rahul Raj</h5>
+                            <p class="card-text">
+                                "Spent the evening by the beach watching the sunset. The sound of
+                                the waves, warm sand and peaceful atmosphere made this trip
+                                absolutely worth it."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Manali Mountains">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Adaya Singh</h5>
+                            <p class="card-text">
+                                "Waking up surrounded by mountains was the best part of this trip.
+                                The weather was amazing and every turn on the road had another
+                                beautiful view waiting for us."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- ROW 2 -->
+                <div class="card-group">
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Kerala Backwaters">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Alis Raj Shaw</h5>
+                            <p class="card-text">
+                                "The backwaters were so calm and beautiful. Sitting on the
+                                houseboat and watching the greenery pass by felt like a perfect
+                                break from everyday life."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Jaipur Rajasthan">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Aradhya Bharti</h5>
+                            <p class="card-text">
+                                "Loved exploring the colourful streets and beautiful old
+                                architecture of Jaipur. Every place had something interesting
+                                to discover and photograph."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Udaipur Lake">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Kumar Satyam</h5>
+                            <p class="card-text">
+                                "Udaipur felt completely different from anywhere I've visited
+                                before. The lake, palaces and peaceful evenings made this one of
+                                my favourite travel memories."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- ROW 3 -->
+                <div class="card-group">
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Ladakh Mountains">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Abhijeet Kumar Pandey</h5>
+                            <p class="card-text">
+                                "The landscapes here are unreal. Driving through the mountains
+                                and seeing the changing scenery along the way made this journey
+                                feel completely different from a normal trip."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <img src="https://cdn.audleytravel.com/4767/3405/79/209236-the-ghats-varanasi.jpg"
+                            class="card-img-top" alt="Varanasi Ghats">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Nihit Raj</h5>
+                            <p class="card-text">
+                                "Walking along the ghats in the evening was such a unique
+                                experience. The city has a completely different energy that is
+                                difficult to describe until you experience it yourself."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1609947017136-9daf32a5eb16?auto=format&fit=crop&w=900&q=80"
+                            class="card-img-top" alt="Rishikesh">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Om Kumar Mallik</h5>
+                            <p class="card-text">
+                                "Loved the peaceful atmosphere around the Ganges and the
+                                mountains in the background. Rishikesh gave me the perfect mix
+                                of nature, calm and adventure."
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Uploaded by a traveller</small>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+            <!-- ================= FAQ ================= -->
+
+            <section class="section faq-section">
+
+                <div class="faq-heading">
+
+                    <span class="section-label">FAQ</span>
+
+                    <h2>
+                        Questions?
+                        <em>We've got answers.</em>
+                    </h2>
+
+                </div>
+
+
+                <div class="faq-list">
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            How does trip planning work?
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Tell us where you want to go and what kind of
+                                experience you're looking for. We then create
+                                a personalized trip plan around your preferences.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            Can I customize my itinerary?
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Absolutely. Your itinerary is flexible and can
+                                be adjusted according to your interests, budget,
+                                duration and travel style.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            Is this suitable for solo travelers?
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Yes. Solo travelers can create trips focused on
+                                exploration, culture, adventure or relaxation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            Can I travel with my family?
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Yes. Family trips can be designed around
+                                comfortable stays, activities and destinations
+                                suitable for different age groups.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FINAL CTA ================= -->
+
+            <section class="final-cta">
+
+                <div class="cta-circle circle-one"></div>
+                <div class="cta-circle circle-two"></div>
+
+                <div class="cta-content">
+
+                    <span class="section-label">
+                        YOUR NEXT ADVENTURE
+                    </span>
+
+                    <h2>
+                        Stop dreaming.
+                        <br>
+                        <em>Start Safaring.</em>
+                    </h2>
+
+                    <p>
+                        The world is bigger than your routine.
+                        Let's make your next trip count.
+                    </p>
+
+                    <button onclick="scrollToPlanner()" class="cta-btn">
+                        Plan my trip
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FOOTER ================= -->
+
+            <footer>
+
+                <div class="footer-main">
+
+                    <div class="footer-brand">
+
+                        <a href="#" class="logo">
+                            Safar<span>AI</span>
+                        </a>
+
+                        <p>
+                            Travel thoughtfully.
+                            Explore freely.
+                            Create unforgettable stories.
+                        </p>
+
+                        <div class="socials">
+
+                            <a href="#">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+
+                            <a href="#">
+                                <i class="fa-brands fa-facebook"></i>
+                            </a>
+
+                            <a href="#">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="footer-column">
+
+                        <h4>Explore</h4>
+
+                        <a href="#destinations">Destinations</a>
+                        <a href="#experiences">Experiences</a>
+                        <a href="#stories">Stories</a>
+
+                    </div>
+
+
+                    <div class="footer-column">
+
+                        <h4>Company</h4>
+
+                        <a href="#">About us</a>
+                        <a href="#">Contact</a>
+                        <a href="#">Careers</a>
+
+                    </div>
+
+
+                    <div class="footer-column">
+
+                        <h4>Support</h4>
+
+                        <a href="#">Help center</a>
+                        <a href="#">Privacy</a>
+                        <a href="#">Terms</a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="footer-bottom">
+
+                    <span>
+                        © 2026 SafarAI. All rights reserved.
+                    </span>
+
+                    <span>
+                        Made for people who love to Safar.
+                    </span>
+
+                </div>
+
+            </footer>
+
+
+            <script src="/static/javaScript/homepage.js"></script>
+
+</body>
+
+</html>
