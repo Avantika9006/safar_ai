@@ -280,12 +280,13 @@ ${message}`
             reply: reply
         });
 
-   } catch (error) {
+  } catch (error) {
     console.error("Gemini Error:", error);
 
     return res.status(500).json({
         error: "Gemini API failed",
-        details: error.message
+        details: error?.message || String(error),
+        status: error?.status || null
     });
 }
 
