@@ -280,12 +280,17 @@ ${message}`
             reply: reply
         });
 
-  } catch (error) {
-    console.error("Gemini Error:", error);
+ } catch (error) {
+    console.error("========== GEMINI ERROR ==========");
+    console.error(error);
+    console.error("Message:", error?.message);
+    console.error("Status:", error?.status);
+    console.error("Details:", error?.details);
+    console.error("===================================");
 
     return res.status(500).json({
         error: "Gemini API failed",
-        details: error?.message || String(error),
+        message: error?.message || "Unknown error",
         status: error?.status || null
     });
 }
