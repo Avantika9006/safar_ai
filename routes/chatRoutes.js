@@ -42,7 +42,7 @@ IMPORTANT:
 7. Do not invent live information such as current hotel prices, weather, flight availability, or opening hours.
 8. For prices, give approximate ranges and clearly label them as estimates.
 9. Adapt the answer to the user's budget, duration and interests when provided.
-10. If important information is missing, still give a useful answer and mention what additional information would improve the plan.
+10. If important information is missing, still give a useful answer.
 11. Keep the response well structured and easy to read.
 12. For itineraries, include realistic travel flow between places.
 13. Mention local food and activities where relevant.
@@ -52,26 +52,15 @@ IMPORTANT:
 For a trip-planning request, use this structure when appropriate:
 
 🌍 Trip Overview
-
 💰 Estimated Budget
-
 📍 Day-by-Day Itinerary
-
 🏨 Stay
-
 🚗 Transportation
-
 🍴 Local Food
-
 ✨ Things to Do
-
 💎 Hidden Gems
-
 🛡️ Safety Tips
-
 💡 Money-Saving Tips
-
-End with a short useful suggestion or ask one relevant follow-up question if needed.
 
 Always behave as SAFAR AI.
 `;
@@ -84,17 +73,18 @@ Always behave as SAFAR AI.
 function getFallbackResponse(message) {
 
     const text = String(message || "").trim();
- const lowerText = text.toLowerCase();
+    const lowerText = text.toLowerCase();
 
-if (
-    lowerText === "hello" ||
-    lowerText === "hi" ||
-    lowerText === "hey" ||
-    lowerText === "hii" ||
-    lowerText.includes("hello safar") ||
-    lowerText.includes("hi safar")
-) {
-    return `
+    // Greeting
+    if (
+        lowerText === "hello" ||
+        lowerText === "hi" ||
+        lowerText === "hey" ||
+        lowerText === "hii" ||
+        lowerText.includes("hello safar") ||
+        lowerText.includes("hi safar")
+    ) {
+        return `
 🌍 **Hello! I'm SAFAR AI** 👋
 
 I'm your AI travel assistant and traveller's companion.
@@ -111,46 +101,52 @@ I can help you with:
 
 Just tell me where you want to go or what you want to know!
 
-**For example:**  
+**For example:**
 "Plan a 5-day trip to Rajasthan under ₹8000."
 `;
-}
+    }
+
+    // If user asks something that is not a travel question
+    if (
+        lowerText === "thanks" ||
+        lowerText === "thank you" ||
+        lowerText === "ok" ||
+        lowerText === "okay"
+    ) {
         return `
 🌍 **SAFAR AI**
 
-Tell me a destination or travel question.
+You're welcome! 😊
 
-For example:
-• Places to visit in Patna
-• Best food in Kolkata
-• Plan a 3-day trip to Manali
-• Things to do in Japan
-• Best time to visit Kerala
-• Budget trip to Rajasthan
-        `;
+Whenever you're ready, tell me a destination or travel question and I'll help you plan your journey.
+`;
     }
 
-    // Try to detect common destination patterns
+    // Try to detect destination
     let destination = null;
 
     const patterns = [
-        /(?:trip|travel|visit|explore|exploring|places|things|food|hotels?|guide|about|in|to)\s+(?:in|to|about)?\s*([A-Za-z][A-Za-z .'-]{2,})/i,
+        /(?:trip|travel|visit|explore|exploring|places|things|food|hotels?|guide|about)\s+(?:to|in|about)?\s*([A-Za-z][A-Za-z .'-]{2,})/i,
+        /(?:in|to)\s+([A-Za-z][A-Za-z .'-]{2,})/i,
         /(?:about|for|of)\s+([A-Za-z][A-Za-z .'-]{2,})/i
     ];
 
     for (const pattern of patterns) {
+
         const match = text.match(pattern);
 
         if (match && match[1]) {
+
             destination = match[1]
                 .replace(/\b(under|for|with|on|during|within)\b.*$/i, "")
                 .trim();
 
-            if (destination.length > 2) break;
+            if (destination.length > 2) {
+                break;
+            }
         }
     }
 
-    // Remove common question words
     if (destination) {
         destination = destination
             .replace(/^(a|an|the|my|me)\s+/i, "")
@@ -179,13 +175,13 @@ For example:
         ? `₹${budgetMatch[1]}`
         : "a budget suitable for you";
 
-
     return `
 🌍 **SAFAR AI – Travel Guide**
 
 I can help you explore **${destination}**.
 
 ### 📍 What you can explore
+
 • Popular tourist attractions  
 • Historical and cultural places  
 • Nature and scenic locations  
@@ -196,39 +192,46 @@ I can help you explore **${destination}**.
 ### 🗓️ Suggested ${duration} plan
 
 **Day 1 – Explore the city**
-• Visit major attractions
-• Explore a local market
-• Try regional food
+
+• Visit major attractions  
+• Explore a local market  
+• Try regional food  
 
 **Day 2 – Culture & Experiences**
-• Visit important cultural or historical locations
-• Try a local activity
-• Explore the local area in the evening
+
+• Visit important cultural or historical locations  
+• Try a local activity  
+• Explore the local area in the evening  
 
 **Day 3 – Nature & Local Exploration**
-• Visit a scenic location
-• Explore lesser-known areas
-• Try local cuisine before departure
+
+• Visit a scenic location  
+• Explore lesser-known areas  
+• Try local cuisine before departure  
 
 ### 🍴 Food
+
 Try the region's traditional dishes, street food and locally popular restaurants.
 
 ### 🚗 Transportation
-Use local buses, metro/train services, taxis or app-based transport depending on what is available at the destination.
+
+Use local buses, metro/train services, taxis or app-based transport depending on what is available.
 
 ### 💰 Budget
+
 Your mentioned budget: **${budget}**
 
 Actual costs can vary depending on transport, accommodation, season and activities.
 
 ### 💡 SAFAR Tip
-For a much more specific plan, tell me:
+
+For a more specific plan, tell me:
 
 **Destination + number of days + budget**
 
 Example:
-> "Plan a 4-day trip to Patna and Bodh Gaya under ₹6000."
 
+"Plan a 4-day trip to Patna and Bodh Gaya under ₹6000."
 `;
 }
 
@@ -261,6 +264,7 @@ router.post("/", async (req, res) => {
                             text: `${SAFAR_PROMPT}
 
 User's travel question:
+
 ${message}`
                         }
                     ]
@@ -275,14 +279,15 @@ ${message}`
             reply: reply
         });
 
-  } catch (error) {
+    } catch (error) {
 
-    console.error("Gemini Error:", error);
+        console.error("Gemini Error:", error);
 
-    return res.json({
-        reply: getFallbackResponse(req.body.message)
-    });
-}
+        // Gemini unavailable → show fallback instead of technical error
+        return res.json({
+            reply: getFallbackResponse(req.body.message)
+        });
+    }
 
 });
 
