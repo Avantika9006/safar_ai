@@ -280,15 +280,14 @@ ${message}`
             reply: reply
         });
 
-    } catch (error) {
+   } catch (error) {
+    console.error("Gemini Error:", error);
 
-        console.error("Gemini Error:", error);
-
-        // Gemini unavailable → show fallback instead of technical error
-        return res.json({
-            reply: getFallbackResponse(req.body.message)
-        });
-    }
+    return res.status(500).json({
+        error: "Gemini API failed",
+        details: error.message
+    });
+}
 
 });
 
