@@ -155,10 +155,9 @@ ${message}`
                 error?.message || error
             );
 
-            // Retry only when Gemini returns 503
             if (error?.status === 503 && attempt < maxRetries) {
 
-                const waitTime = attempt * 2000;
+                const waitTime = attempt * 3000;
 
                 console.log(
                     `Gemini unavailable. Retrying in ${waitTime}ms...`
@@ -176,7 +175,6 @@ ${message}`
         }
     }
 }
-
 
 // --------------------------------------------------
 // CHAT API
