@@ -115,105 +115,150 @@ You are SAFAR AI — not a generic chatbot.
 
 
 // FALLBACK RESPONSE
-function getFallbackResponse(message) {
 
-    const text = message.toLowerCase();
+   function getFallbackResponse(message) {
 
-    if (text.includes("bihar")) {
-        return `
+    const text = message.trim();
+
+    let destination = "your destination";
+
+    const patterns = [
+        /trip to (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i,
+        /travel to (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i,
+        /visit (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i,
+        /trip in (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i
+    ];
+
+    for (const pattern of patterns) {
+        const match = text.match(pattern);
+
+        if (match && match[1]) {
+            destination = match[1].trim();
+            break;
+        }
+    }
+
+    let duration = "3 days";
+
+    const durationMatch = text.match(
+        /(\d+)\s*(?:day|days|night|nights)/i
+    );
+
+    if (durationMatch) {
+        duration = `${durationMatch[1]} days`;
+    }
+
+    let budget = "Not specified";
+
+    const budgetMatch = text.match(
+        /(?:₹|rs\.?|inr)\s*([\d,]+)|(?:under|budget of)\s*(?:₹|rs\.?|inr)?\s*([\d,]+)/i
+    );
+
+    if (budgetMatch) {
+        const amount = budgetMatch[1] || budgetMatch[2];
+        budget = `₹${amount}`;
+    }
+
+    return `
 # 🌍 SAFAR AI TRIP PLAN
 
 ## 📍 Trip Overview
-- **Destination:** Bihar
-- **Duration:** 3 Days
+
+- **Destination:** ${destination}
+- **Duration:** ${duration}
+- **Budget:** ${budget}
 - **Travel Style:** Budget-friendly
 
 ## 💰 Estimated Budget
 
 | Category | Estimated Cost |
 |----------|----------------|
-| Transport | ₹1,200 |
-| Accommodation | ₹1,500 |
-| Food | ₹1,200 |
-| Activities & Entry Fees | ₹500 |
+| Transport | ₹1,500 |
+| Accommodation | ₹2,000 |
+| Food | ₹1,500 |
+| Activities & Entry Fees | ₹700 |
 | Miscellaneous | ₹500 |
-| **Total** | **₹4,900** |
+| **Total** | **₹6,200 approx.** |
 
-## 🗓️ Day 1 — Patna
-
-### 🌅 Morning
-- Visit Golghar
-- Explore Gandhi Maidan area
-
-### ☀️ Afternoon
-- Visit Bihar Museum
-- Have a local lunch
-
-### 🌆 Evening
-- Explore Patna city
-- Enjoy local food
-
-## 🗓️ Day 2 — Bodh Gaya
+## 🗓️ Day 1 — Explore ${destination}
 
 ### 🌅 Morning
-- Travel to Bodh Gaya
-- Visit Mahabodhi Temple
+- Explore the main attractions of ${destination}.
+- Visit a popular landmark or sightseeing location.
 
 ### ☀️ Afternoon
-- Visit Thai Monastery
-- Explore the local area
+- Explore nearby attractions.
+- Experience local cuisine.
 
 ### 🌆 Evening
-- Experience the peaceful atmosphere around the temple
+- Explore a local market or popular evening spot.
 
-## 🗓️ Day 3 — Rajgir
+## 🗓️ Day 2 — Local Experiences
 
 ### 🌅 Morning
-- Travel to Rajgir
-- Visit Vishwa Shanti Stupa
+- Visit another important attraction around ${destination}.
+- Explore the local culture and surroundings.
 
 ### ☀️ Afternoon
-- Explore Rajgir attractions
+- Try a local activity or visit a historical/natural attraction.
 
 ### 🌆 Evening
-- Return towards Patna
+- Visit a scenic or popular evening location.
+
+## 🗓️ Day 3 — Hidden Gems & Relaxation
+
+### 🌅 Morning
+- Explore a less-crowded location near ${destination}.
+- Take photographs and enjoy the surroundings.
+
+### ☀️ Afternoon
+- Try another local experience.
+- Have a relaxed lunch.
+
+### 🌆 Evening
+- Visit a local market for souvenirs.
+- Prepare for your return journey.
+
+## 🏨 Stay Recommendations
+
+- Choose budget hotels, hostels, or homestays.
+- Prefer accommodation close to major attractions or public transport.
+- Verify current prices and availability before booking.
+
+## 🚗 Transportation
+
+- Use public transportation wherever practical.
+- For nearby attractions, consider shared/local transport.
+- Compare transportation options before travelling.
+
+## ⭐ Hidden Gems
+
+- Explore local markets.
+- Ask locals about less-crowded attractions.
+- Look for local food and cultural experiences.
 
 ## 🛡️ SAFAR Safety Tips
-- Keep important documents and belongings secure.
+
+- Keep your belongings and important documents secure.
 - Prefer reliable transportation.
-- Avoid travelling alone in unfamiliar areas late at night.
-- Check local conditions before travelling.
+- Check local weather and travel conditions.
+- Avoid unfamiliar areas late at night.
+- Keep emergency contacts accessible.
 
 ## 💡 Money-Saving Tips
+
 - Prefer budget accommodation.
-- Use public transport where practical.
-- Plan nearby attractions together to reduce transport costs.
+- Use public transportation where practical.
+- Eat at local restaurants.
+- Group nearby attractions together to reduce transportation costs.
 
 ## ⚠️ Important Note
-These are approximate estimates. Verify current transport fares,
-entry fees, weather and accommodation availability before travelling.
 
-*SAFAR AI fallback mode is currently active.*
-`;
-    }
-
-    return `
-# 🌍 SAFAR AI
-
-I'm currently running in **fallback mode** because the AI service
+This is SAFAR AI's fallback travel plan because the AI service
 is temporarily unavailable.
 
-I can still help with basic travel planning. Please provide:
-
-- 📍 Destination
-- 🗓️ Number of days
-- 💰 Budget
-- 👥 Number of travelers
-- ⭐ Travel interests
-
-Example:
-
-"Plan a 3-day trip to Bihar under ₹5000."
+Prices, weather, transportation, entry fees and accommodation
+availability can change. Verify the latest information before travelling.
 
 *SAFAR AI fallback mode is currently active.*
 `;
