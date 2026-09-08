@@ -84,8 +84,37 @@ Always behave as SAFAR AI.
 function getFallbackResponse(message) {
 
     const text = String(message || "").trim();
+ const lowerText = text.toLowerCase();
 
-    if (!text) {
+if (
+    lowerText === "hello" ||
+    lowerText === "hi" ||
+    lowerText === "hey" ||
+    lowerText === "hii" ||
+    lowerText.includes("hello safar") ||
+    lowerText.includes("hi safar")
+) {
+    return `
+🌍 **Hello! I'm SAFAR AI** 👋
+
+I'm your AI travel assistant and traveller's companion.
+
+I can help you with:
+
+📍 Places to visit  
+🗺️ Trip planning & itineraries  
+💰 Budget-friendly travel  
+🍴 Local food & experiences  
+🚗 Transportation & routes  
+🏞️ Activities & hidden gems  
+🛡️ Travel tips & safety  
+
+Just tell me where you want to go or what you want to know!
+
+**For example:**  
+"Plan a 5-day trip to Rajasthan under ₹8000."
+`;
+}
         return `
 🌍 **SAFAR AI**
 
