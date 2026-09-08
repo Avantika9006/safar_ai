@@ -7,560 +7,257 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 });
 
-// SAFAR AI instructions for Gemini
 const SAFAR_PROMPT = `
-You are SAFAR AI, an intelligent AI-powered travel assistant.
+You are SAFAR AI, an intelligent travel and tourism assistant.
 
-Your purpose is to help users plan trips, discover destinations, manage budgets,
-find local experiences, and travel safely.
+Your job is to answer ANY travel-related question about ANY destination in the world.
 
-========================
-RESPONSE STRUCTURE
-========================
+The user may ask about:
+- places to visit
+- trip planning
+- sightseeing
+- food
+- hotels/stays
+- transportation
+- routes
+- activities
+- hidden gems
+- local culture
+- estimated budget
+- safety
+- best time to visit
+- family trips
+- solo trips
+- student/budget trips
+- itinerary planning
+- general information about a destination
 
-Always make your response clear, organized, and easy to read.
+IMPORTANT:
+1. Understand natural-language questions even if they are short or grammatically incorrect.
+2. Detect the destination from the user's message whenever possible.
+3. Do NOT require the user to use phrases like "trip to".
+4. If the user asks about a city, state, country, tourist place, or region, answer specifically about that location.
+5. Never respond with generic "your destination" when the destination can be understood.
+6. Give practical and useful information.
+7. Do not invent live information such as current hotel prices, weather, flight availability, or opening hours.
+8. For prices, give approximate ranges and clearly label them as estimates.
+9. Adapt the answer to the user's budget, duration and interests when provided.
+10. If important information is missing, still give a useful answer and mention what additional information would improve the plan.
+11. Keep the response well structured and easy to read.
+12. For itineraries, include realistic travel flow between places.
+13. Mention local food and activities where relevant.
+14. Include safety tips when appropriate.
+15. Do not overwhelm the user with unnecessary information.
 
-For trip-planning requests, use this structure:
+For a trip-planning request, use this structure when appropriate:
 
-# 🌍 SAFAR AI TRIP PLAN
+🌍 Trip Overview
 
-## 📍 Trip Overview
-- Destination:
-- Duration:
-- Number of Travelers:
-- Budget:
-- Travel Style:
+💰 Estimated Budget
 
-## 💰 Estimated Budget
+📍 Day-by-Day Itinerary
 
-| Category | Estimated Cost |
-|----------|----------------|
-| Transport | ₹... |
-| Accommodation | ₹... |
-| Food | ₹... |
-| Activities & Entry Fees | ₹... |
-| Miscellaneous | ₹... |
-| **Total** | **₹...** |
+🏨 Stay
 
-## 🗓️ Day 1 — [Place/Theme]
+🚗 Transportation
 
-### 🌅 Morning
-- Activity
-- Place to visit
+🍴 Local Food
 
-### ☀️ Afternoon
-- Activity
-- Place to visit
+✨ Things to Do
 
-### 🌆 Evening
-- Activity
-- Food/local experience
+💎 Hidden Gems
 
-### 🍽️ Food Recommendation
-- Suggest suitable local food.
+🛡️ Safety Tips
 
-## 🗓️ Day 2 — [Place/Theme]
-Use the same structure.
+💡 Money-Saving Tips
 
-## 🗓️ Day 3 — [Place/Theme]
-Use the same structure.
+End with a short useful suggestion or ask one relevant follow-up question if needed.
 
-## 🏨 Stay Recommendations
-- Suggest budget-friendly types of accommodation.
-- Mention the area/location.
-- Do not claim live availability.
-
-## 🚗 Transportation
-- Explain how to travel between important locations.
-- Prefer practical and budget-friendly options.
-
-## ⭐ Hidden Gems
-- Suggest less-crowded or local places when appropriate.
-
-## 🛡️ SAFAR Safety Tips
-- Give 3–5 practical safety tips.
-- Avoid unnecessary alarm.
-- Recommend safe travel timings when relevant.
-
-## 💡 Money-Saving Tips
-- Give practical ways to stay within the user's budget.
-
-## ⚠️ Important Note
-If prices, weather, traffic, hotel availability, or other information
-could change in real time, clearly mention that the user should verify
-the latest information before travelling.
-
-========================
-GENERAL RULES
-========================
-
-1. Keep answers concise but useful.
-2. Use headings, bullet points, tables, and emojis where appropriate.
-3. Always consider the user's budget.
-4. Do not invent live prices, hotel availability, traffic, or weather.
-5. If important information is missing, ask the user for it.
-6. If the user gives a destination, duration, and budget, create the plan directly.
-7. Give realistic estimated costs and clearly label them as estimates.
-8. Prioritize safe and responsible tourism.
-9. Recommend local businesses and places as suggestions, not guarantees.
-10. Do not make unsupported claims.
-11. If the budget is unrealistic, explain why and suggest alternatives.
-12. Adapt the itinerary according to the user's interests such as:
-    nature, history, food, photography, adventure, culture, spirituality,
-    family travel, or solo travel.
-13. Always maintain the SAFAR AI identity and tone.
-
-You are SAFAR AI — not a generic chatbot.
+Always behave as SAFAR AI.
 `;
 
 
-// FALLBACK RESPONSE
+// --------------------------------------------------
+// UNIVERSAL FALLBACK
+// --------------------------------------------------
 
-   function getFallbackResponse(message) {
+function getFallbackResponse(message) {
 
-    const text = message.toLowerCase();
+    const text = String(message || "").trim();
 
-    // =========================
-    // HIMACHAL PRADESH
-    // =========================
-    if (
-        text.includes("himachal") ||
-        text.includes("manali") ||
-        text.includes("shimla")
-    ) {
+    if (!text) {
         return `
-# 🌍 SAFAR AI — Himachal Pradesh Trip Plan
+🌍 **SAFAR AI**
 
-## 📍 Trip Overview
+Tell me a destination or travel question.
 
-- **Destination:** Himachal Pradesh
-- **Duration:** 3 Days
-- **Best for:** Mountains, nature, sightseeing & local food
-- **Travel Style:** Budget-friendly
-
-## 💰 Approximate Budget
-
-| Category | Estimated Cost |
-|---|---:|
-| Transport | ₹1,500–₹2,500 |
-| Stay | ₹1,500–₹2,500 |
-| Food | ₹1,000–₹1,500 |
-| Sightseeing | ₹500–₹1,000 |
-| **Total** | **₹4,500–₹7,500 approx.** |
-
-## 🗓️ DAY 1 — SHIMLA 🏔️
-
-### 🌅 Morning
-📍 **The Ridge & Christ Church**
-- Walk around The Ridge.
-- Enjoy the mountain views.
-- Visit the historic Christ Church.
-
-### ☀️ Afternoon
-📍 **Mall Road**
-- Explore Mall Road.
-- Try local cafés and street food.
-- Visit **Lakkar Bazaar** for wooden handicrafts.
-
-### 🌆 Evening
-📍 **Jakhoo Temple**
-- Visit the famous hilltop temple.
-- Enjoy panoramic views of Shimla.
-
-### 🍽️ Try These
-- Himachali Dham
-- Siddu
-- Momos
-- Chai
-
-## 🗓️ DAY 2 — MANALI 🌲
-
-### 🌅 Morning
-📍 **Hadimba Temple**
-- Visit the famous cedar-forest temple.
-- Explore the surrounding forest.
-
-### ☀️ Afternoon
-📍 **Old Manali**
-- Explore cafés and local shops.
-- Walk around the riverside area.
-
-### 🌆 Evening
-📍 **Mall Road, Manali**
-- Shopping and local food.
-- Relax and enjoy the mountain atmosphere.
-
-### 🍽️ Try These
-- Siddu
-- Thukpa
-- Momos
-- Chana Madra
-
-## 🗓️ DAY 3 — SOLANG VALLEY ❄️
-
-### 🌅 Morning
-📍 **Solang Valley**
-- Enjoy beautiful mountain scenery.
-- Try suitable seasonal activities.
-
-### ☀️ Afternoon
-📍 **Atal Tunnel / nearby sightseeing**
-- Visit if travel conditions and time permit.
-- Check local road conditions before travelling.
-
-### 🌆 Evening
-- Return towards Manali.
-- Shop for local souvenirs.
-
-## 🚗 HOW TO TRAVEL
-
-- Use buses/Volvo services for major routes.
-- Use local cabs for sightseeing.
-- Shared taxis can help reduce costs.
-- Mountain travel can take longer than expected.
-
-## 🏨 WHERE TO STAY
-
-**Shimla:** Stay around the main town or nearby accessible areas.
-
-**Manali:** Old Manali or areas close to the main market can be convenient.
-
-Choose budget hotels/hostels/homestays and verify current prices before booking.
-
-## ⭐ MUST-VISIT PLACES
-
-🏔️ The Ridge  
-🌲 Old Manali  
-🛕 Hadimba Temple  
-❄️ Solang Valley  
-🛍️ Mall Road  
-🌳 Lakkar Bazaar  
-
-## 🛡️ SAFAR SAFETY TIPS
-
-- Check weather and road conditions before mountain travel.
-- Carry warm clothing.
-- Keep some cash for local transport.
-- Avoid travelling on unfamiliar mountain roads late at night.
-- Follow local instructions at high-altitude locations.
-
-## 💡 SAVE MONEY
-
-- Use buses/shared transport.
-- Choose budget accommodation.
-- Eat at local restaurants.
-- Group nearby attractions together.
-
-## ⚠️ SAFAR NOTE
-
-Travel time, weather, road conditions, entry fees and accommodation
-prices can change. Verify the latest information before travelling.
-
-*SAFAR AI is currently using its travel fallback database.*
-`;
+For example:
+• Places to visit in Patna
+• Best food in Kolkata
+• Plan a 3-day trip to Manali
+• Things to do in Japan
+• Best time to visit Kerala
+• Budget trip to Rajasthan
+        `;
     }
 
+    // Try to detect common destination patterns
+    let destination = null;
 
-    // =========================
-    // GOA
-    // =========================
-    if (text.includes("goa")) {
-        return `
-# 🌴 SAFAR AI — Goa Trip Plan
+    const patterns = [
+        /(?:trip|travel|visit|explore|exploring|places|things|food|hotels?|guide|about|in|to)\s+(?:in|to|about)?\s*([A-Za-z][A-Za-z .'-]{2,})/i,
+        /(?:about|for|of)\s+([A-Za-z][A-Za-z .'-]{2,})/i
+    ];
 
-## 📍 Trip Overview
+    for (const pattern of patterns) {
+        const match = text.match(pattern);
 
-- **Duration:** 3 Days
-- **Best for:** Beaches, food, sightseeing & relaxation
+        if (match && match[1]) {
+            destination = match[1]
+                .replace(/\b(under|for|with|on|during|within)\b.*$/i, "")
+                .trim();
 
-## 🗓️ DAY 1 — NORTH GOA
-
-🏖️ Baga Beach  
-🏖️ Calangute Beach  
-🏰 Fort Aguada  
-
-### 🍽️ Try
-- Goan fish curry
-- Poi bread
-- Bebinca
-
-## 🗓️ DAY 2 — OLD GOA
-
-⛪ Basilica of Bom Jesus  
-⛪ Se Cathedral  
-🌊 Miramar Beach  
-🌅 Sunset experience
-
-## 🗓️ DAY 3 — SOUTH GOA
-
-🏖️ Palolem Beach  
-🌴 Colva Beach  
-🛍️ Local market
-
-## 💰 Budget
-
-Approximately **₹5,000–₹8,000 per person**, depending on transport and stay.
-
-Verify current prices before booking.
-
-*SAFAR AI fallback mode.*
-`;
+            if (destination.length > 2) break;
+        }
     }
 
-
-    // =========================
-    // RAJASTHAN
-    // =========================
-    if (text.includes("rajasthan") || text.includes("jaipur")) {
-        return `
-# 🕌 SAFAR AI — Rajasthan Trip Plan
-
-## 🗓️ DAY 1 — JAIPUR
-
-🏰 Amber Fort  
-🏛️ City Palace  
-📸 Hawa Mahal  
-🛍️ Johari Bazaar
-
-### 🍽️ Try
-- Dal Baati Churma
-- Ghewar
-- Pyaaz Kachori
-
-## 🗓️ DAY 2 — JAIPUR
-
-🌅 Nahargarh Fort  
-🔭 Jantar Mantar  
-🏛️ Albert Hall Museum  
-🌆 Local market
-
-## 🗓️ DAY 3 — LOCAL EXPERIENCE
-
-🎨 Explore handicraft markets  
-🍽️ Try traditional Rajasthani food  
-📸 Explore historic streets
-
-**Estimated budget:** ₹5,000–₹8,000 excluding long-distance travel.
-
-*SAFAR AI fallback mode.*
-`;
+    // Remove common question words
+    if (destination) {
+        destination = destination
+            .replace(/^(a|an|the|my|me)\s+/i, "")
+            .trim();
     }
 
-
-    // =========================
-    // KERALA
-    // =========================
-    if (text.includes("kerala") || text.includes("munnar") || text.includes("alleppey")) {
-        return `
-# 🌴 SAFAR AI — Kerala Trip Plan
-
-## 🗓️ DAY 1 — KOCHI
-
-🏛️ Fort Kochi  
-🎨 Chinese Fishing Nets  
-⛪ St. Francis Church  
-🌅 Marine Drive
-
-## 🗓️ DAY 2 — MUNNAR
-
-🌿 Tea Gardens  
-🏔️ Mountain viewpoints  
-🌱 Tea Museum
-
-## 🗓️ DAY 3 — ALLEPPEY
-
-🚤 Backwater experience  
-🌴 Explore local surroundings  
-🍛 Try traditional Kerala cuisine
-
-### 🍽️ Try
-- Appam & stew
-- Kerala Sadya
-- Puttu & kadala curry
-
-**Estimated budget:** ₹6,000–₹10,000 depending on stay and transport.
-
-*SAFAR AI fallback mode.*
-`;
+    if (!destination) {
+        destination = "this destination";
     }
 
-
-    // =========================
-    // BIHAR
-    // =========================
-    if (text.includes("bihar") || text.includes("bodh gaya") || text.includes("rajgir")) {
-        return `
-# 🏛️ SAFAR AI — Bihar Trip Plan
-
-## 🗓️ DAY 1 — PATNA
-
-🏛️ Bihar Museum  
-🏛️ Golghar  
-🌳 Gandhi Maidan
-
-### 🍽️ Try
-- Litti Chokha
-- Sattu Sharbat
-
-## 🗓️ DAY 2 — BODH GAYA
-
-🛕 Mahabodhi Temple  
-🏯 Thai Monastery  
-🌳 Great Buddha Statue
-
-## 🗓️ DAY 3 — RAJGIR
-
-🏔️ Vishwa Shanti Stupa  
-🏛️ Rajgir historical sites  
-🌳 Local sightseeing
-
-**Estimated budget:** ₹4,000–₹7,000 depending on transport and accommodation.
-
-*SAFAR AI fallback mode.*
-`;
-    }
-
-
-    // =========================
-    // UNKNOWN DESTINATION
-    // =========================
-
-    let destination = "your destination";
-
-    const match = message.match(
-        /(?:trip to|travel to|visit|trip in)\\s+(.+?)(?:\\s+under|\\s+for|\\s+with|$)/i
+    // Duration
+    const durationMatch = text.match(
+        /(\d+)\s*(?:day|days|night|nights)/i
     );
 
-    if (match) {
-        destination = match[1].trim();
-    }
+    const duration = durationMatch
+        ? `${durationMatch[1]} days`
+        : "a short trip";
+
+    // Budget
+    const budgetMatch = text.match(
+        /(?:₹|rs\.?|inr)\s*([\d,]+)/i
+    );
+
+    const budget = budgetMatch
+        ? `₹${budgetMatch[1]}`
+        : "a budget suitable for you";
+
 
     return `
-# 🌍 SAFAR AI TRIP PLAN
+🌍 **SAFAR AI – Travel Guide**
 
-## 📍 ${destination}
+I can help you explore **${destination}**.
 
-I can help you plan a trip to **${destination}**.
+### 📍 What you can explore
+• Popular tourist attractions  
+• Historical and cultural places  
+• Nature and scenic locations  
+• Local markets  
+• Famous food and local cuisine  
+• Adventure and recreational activities  
 
-### 🗓️ Suggested 3-Day Structure
+### 🗓️ Suggested ${duration} plan
 
-**DAY 1 — Main Attractions**
-- Visit the most popular landmark.
-- Explore the local area.
-- Try regional food.
+**Day 1 – Explore the city**
+• Visit major attractions
+• Explore a local market
+• Try regional food
 
-**DAY 2 — Experiences**
-- Explore cultural, historical or natural attractions.
-- Visit a local market.
-- Enjoy a local food experience.
+**Day 2 – Culture & Experiences**
+• Visit important cultural or historical locations
+• Try a local activity
+• Explore the local area in the evening
 
-**DAY 3 — Hidden Gems**
-- Explore a less-crowded attraction.
-- Try a local activity.
-- Shop for local souvenirs.
+**Day 3 – Nature & Local Exploration**
+• Visit a scenic location
+• Explore lesser-known areas
+• Try local cuisine before departure
 
-### 🍽️ Food
-
-Try authentic local cuisine and popular regional dishes.
+### 🍴 Food
+Try the region's traditional dishes, street food and locally popular restaurants.
 
 ### 🚗 Transportation
+Use local buses, metro/train services, taxis or app-based transport depending on what is available at the destination.
 
-Use public transport or reliable local taxis where practical.
+### 💰 Budget
+Your mentioned budget: **${budget}**
 
-### 🏨 Stay
+Actual costs can vary depending on transport, accommodation, season and activities.
 
-Consider budget hotels, hostels or homestays near major attractions.
+### 💡 SAFAR Tip
+For a much more specific plan, tell me:
 
-### 🛡️ Safety
+**Destination + number of days + budget**
 
-Check current weather, transport conditions and local travel advisories
-before travelling.
+Example:
+> "Plan a 4-day trip to Patna and Bodh Gaya under ₹6000."
 
-### ⚠️ Important
-
-This is a fallback plan because the AI service is temporarily unavailable.
-For accurate current prices, weather, hotel availability and detailed
-destination-specific recommendations, verify the latest information
-before travelling.
-
-*SAFAR AI fallback mode is currently active.*
 `;
 }
 
 
+// --------------------------------------------------
 // CHAT API
+// --------------------------------------------------
+
 router.post("/", async (req, res) => {
 
     try {
 
         const { message } = req.body;
 
-        console.log("Chat request received:", message);
-
-        if (!message) {
+        if (!message || !message.trim()) {
             return res.status(400).json({
-                error: "Message is required"
+                error: "Please enter a travel question."
             });
         }
 
-        const prompt = `${SAFAR_PROMPT}
+        const response = await ai.models.generateContent({
 
-USER MESSAGE:
+            model: "gemini-3.6-flash",
 
-${message}`;
+            contents: [
+                {
+                    role: "user",
+                    parts: [
+                        {
+                            text: `${SAFAR_PROMPT}
 
-        let response;
-
-        // Try Gemini up to 3 times
-        for (let attempt = 1; attempt <= 3; attempt++) {
-
-            try {
-
-                response = await ai.models.generateContent({
-                    model: "gemini-3.6-flash",
-                    contents: prompt
-                });
-
-                break;
-
-            } catch (error) {
-
-                if (error.status === 503 && attempt < 3) {
-
-                    console.log(
-                        `Gemini busy. Retrying... (${attempt}/3)`
-                    );
-
-                    await new Promise(resolve =>
-                        setTimeout(resolve, 2000)
-                    );
-
-                } else {
-
-                    throw error;
-
+User's travel question:
+${message}`
+                        }
+                    ]
                 }
-            }
-        }
+            ]
 
-        // Gemini succeeded
+        });
+
+        const reply = response.text;
+
         return res.json({
-            reply: response.text
+            reply: reply
         });
 
     } catch (error) {
 
-        console.error("Gemini API Error:", error);
+        console.error("Gemini Error:", error);
 
-        // Instead of showing an error to the user,
-        // use SAFAR AI fallback mode.
-        console.log("Using SAFAR AI fallback response.");
-
+        // If Gemini quota/rate limit/server problem occurs,
+        // SAFAR AI still gives a response.
         return res.json({
             reply: getFallbackResponse(req.body.message)
         });
     }
 
 });
+
 
 module.exports = router;
