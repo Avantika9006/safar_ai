@@ -4,236 +4,177 @@ const { GoogleGenAI } = require("@google/genai");
 const router = express.Router();
 
 const ai = new GoogleGenAI({
-
     apiKey: process.env.GEMINI_API_KEY
 });
 
 const SAFAR_PROMPT = `
 You are SAFAR AI, an intelligent travel and tourism assistant.
 
-Your job is to answer ANY travel-related question about ANY destination in the world.
+Your job is to answer ANY travel-related question about ANY destination in
+the world.
 
-The user may ask about:
-- places to visit
-- trip planning
-- sightseeing
-- food
-- hotels/stays
-- transportation
-- routes
-- activities
-- hidden gems
-- local culture
-- estimated budget
-- safety
-- best time to visit
-- family trips
-- solo trips
-- student/budget trips
-- itinerary planning
-- general information about a destination
+IMPORTANT RULES:
 
-IMPORTANT:
-1. Understand natural-language questions even if they are short or grammatically incorrect.
+1. Understand natural-language questions even if they are short,
+   informal, or grammatically incorrect.
+
 2. Detect the destination from the user's message whenever possible.
-3. Do NOT require the user to use phrases like "trip to".
-4. If the user asks about a city, state, country, tourist place, or region, answer specifically about that location.
-5. Never respond with generic "your destination" when the destination can be understood.
-6. Give practical and useful information.
-7. Do not invent live information such as current hotel prices, weather, flight availability, or opening hours.
-8. For prices, give approximate ranges and clearly label them as estimates.
-9. Adapt the answer to the user's budget, duration and interests when provided.
-10. If important information is missing, still give a useful answer.
-11. Keep the response well structured and easy to read.
-12. For itineraries, include realistic travel flow between places.
-13. Mention local food and activities where relevant.
-14. Include safety tips when appropriate.
-15. Do not overwhelm the user with unnecessary information.
 
-For a trip-planning request, use this structure when appropriate:
+3. Detect the number of days/nights whenever provided.
+
+4. Detect the user's budget whenever provided.
+
+5. NEVER ask the user to repeat information that is already present.
+
+6. If the user provides a destination + duration + budget, you MUST create
+   a complete personalized itinerary immediately.
+
+7. If the user asks for 5 days, provide EXACTLY 5 days.
+   If the user asks for 7 days, provide EXACTLY 7 days.
+
+8. DO NOT return a generic 3-day itinerary for a 5-day request.
+
+9. For every day include:
+   - Morning
+   - Afternoon
+   - Evening
+   - Specific places to visit
+   - Transportation
+   - Approximate cost
+
+10. Give a complete budget breakdown:
+   - Transportation
+   - Accommodation
+   - Food
+   - Entry fees
+   - Activities
+   - Miscellaneous
+   - Total estimated cost
+
+11. Compare the estimated total with the user's budget.
+
+12. If the budget is tight, explain that clearly and suggest budget options.
+
+13. Give approximate prices only. Do not claim live prices.
+
+14. Include local food recommendations.
+
+15. Include practical transportation information.
+
+16. Include money-saving tips.
+
+17. Include safety tips when useful.
+
+18. Keep the answer detailed, practical and easy to read.
+
+FOR TRIP PLANNING USE:
 
 🌍 Trip Overview
-💰 Estimated Budget
+
+💰 Budget Breakdown
+
 📍 Day-by-Day Itinerary
-🏨 Stay
+
+🏨 Accommodation
+
 🚗 Transportation
+
 🍴 Local Food
-✨ Things to Do
-💎 Hidden Gems
-🛡️ Safety Tips
+
+✨ Must-Visit Places
+
 💡 Money-Saving Tips
+
+🛡️ Safety Tips
+
+IMPORTANT EXAMPLE:
+
+If the user says:
+
+"Plan a 5-day trip to Rajasthan under ₹8000"
+
+you MUST provide:
+
+Day 1
+Day 2
+Day 3
+Day 4
+Day 5
+
+with specific Rajasthan destinations, activities, transportation and
+estimated costs.
+
+Do NOT ask the user to provide the destination, duration or budget again.
 
 Always behave as SAFAR AI.
 `;
 
-
 // --------------------------------------------------
-// UNIVERSAL FALLBACK
+// GENERATE GEMINI RESPONSE WITH RETRY
 // --------------------------------------------------
 
-function getFallbackResponse(message) {
+async function generateSafarResponse(message) {
 
-    const text = String(message || "").trim();
-    const lowerText = text.toLowerCase();
+    const maxRetries = 3;
 
-    // Greeting
-    if (
-        lowerText === "hello" ||
-        lowerText === "hi" ||
-        lowerText === "hey" ||
-        lowerText === "hii" ||
-        lowerText.includes("hello safar") ||
-        lowerText.includes("hi safar")
-    ) {
-        return `
-🌍 **Hello! I'm SAFAR AI** 👋
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
 
-I'm your AI travel assistant and traveller's companion.
+        try {
 
-I can help you with:
+            console.log(`Gemini attempt ${attempt}/${maxRetries}`);
 
-📍 Places to visit  
-🗺️ Trip planning & itineraries  
-💰 Budget-friendly travel  
-🍴 Local food & experiences  
-🚗 Transportation & routes  
-🏞️ Activities & hidden gems  
-🛡️ Travel tips & safety  
+            const response = await ai.models.generateContent({
 
-Just tell me where you want to go or what you want to know!
+                model: "gemini-3.8-flash",
 
-**For example:**
-"Plan a 5-day trip to Rajasthan under ₹8000."
-`;
-    }
+                contents: [
+                    {
+                        role: "user",
+                        parts: [
+                            {
+                                text: `${SAFAR_PROMPT}
 
-    // If user asks something that is not a travel question
-    if (
-        lowerText === "thanks" ||
-        lowerText === "thank you" ||
-        lowerText === "ok" ||
-        lowerText === "okay"
-    ) {
-        return `
-🌍 **SAFAR AI**
+User's travel question:
 
-You're welcome! 😊
+${message}`
+                            }
+                        ]
+                    }
+                ]
 
-Whenever you're ready, tell me a destination or travel question and I'll help you plan your journey.
-`;
-    }
+            });
 
-    // Try to detect destination
-    let destination = null;
+            console.log("Gemini response received successfully.");
 
-    const patterns = [
-        /(?:trip|travel|visit|explore|exploring|places|things|food|hotels?|guide|about)\s+(?:to|in|about)?\s*([A-Za-z][A-Za-z .'-]{2,})/i,
-        /(?:in|to)\s+([A-Za-z][A-Za-z .'-]{2,})/i,
-        /(?:about|for|of)\s+([A-Za-z][A-Za-z .'-]{2,})/i
-    ];
+            return response.text;
 
-    for (const pattern of patterns) {
+        } catch (error) {
 
-        const match = text.match(pattern);
+            console.error(
+                `Gemini attempt ${attempt} failed:`,
+                error?.message || error
+            );
 
-        if (match && match[1]) {
+            // Retry only when Gemini returns 503
+            if (error?.status === 503 && attempt < maxRetries) {
 
-            destination = match[1]
-                .replace(/\b(under|for|with|on|during|within)\b.*$/i, "")
-                .trim();
+                const waitTime = attempt * 2000;
 
-            if (destination.length > 2) {
-                break;
+                console.log(
+                    `Gemini unavailable. Retrying in ${waitTime}ms...`
+                );
+
+                await new Promise(resolve =>
+                    setTimeout(resolve, waitTime)
+                );
+
+            } else {
+
+                throw error;
+
             }
         }
     }
-
-    if (destination) {
-        destination = destination
-            .replace(/^(a|an|the|my|me)\s+/i, "")
-            .trim();
-    }
-
-    if (!destination) {
-        destination = "this destination";
-    }
-
-    // Duration
-    const durationMatch = text.match(
-        /(\d+)\s*(?:day|days|night|nights)/i
-    );
-
-    const duration = durationMatch
-        ? `${durationMatch[1]} days`
-        : "a short trip";
-
-    // Budget
-    const budgetMatch = text.match(
-        /(?:₹|rs\.?|inr)\s*([\d,]+)/i
-    );
-
-    const budget = budgetMatch
-        ? `₹${budgetMatch[1]}`
-        : "a budget suitable for you";
-
-    return `
-🌍 **SAFAR AI – Travel Guide**
-
-I can help you explore **${destination}**.
-
-### 📍 What you can explore
-
-• Popular tourist attractions  
-• Historical and cultural places  
-• Nature and scenic locations  
-• Local markets  
-• Famous food and local cuisine  
-• Adventure and recreational activities  
-
-### 🗓️ Suggested ${duration} plan
-
-**Day 1 – Explore the city**
-
-• Visit major attractions  
-• Explore a local market  
-• Try regional food  
-
-**Day 2 – Culture & Experiences**
-
-• Visit important cultural or historical locations  
-• Try a local activity  
-• Explore the local area in the evening  
-
-**Day 3 – Nature & Local Exploration**
-
-• Visit a scenic location  
-• Explore lesser-known areas  
-• Try local cuisine before departure  
-
-### 🍴 Food
-
-Try the region's traditional dishes, street food and locally popular restaurants.
-
-### 🚗 Transportation
-
-Use local buses, metro/train services, taxis or app-based transport depending on what is available.
-
-### 💰 Budget
-
-Your mentioned budget: **${budget}**
-
-Actual costs can vary depending on transport, accommodation, season and activities.
-
-### 💡 SAFAR Tip
-
-For a more specific plan, tell me:
-
-**Destination + number of days + budget**
-
-Example:
-
-"Plan a 4-day trip to Patna and Bodh Gaya under ₹6000."
-`;
 }
 
 
@@ -248,54 +189,34 @@ router.post("/", async (req, res) => {
         const { message } = req.body;
 
         if (!message || !message.trim()) {
+
             return res.status(400).json({
                 error: "Please enter a travel question."
             });
+
         }
 
-        const response = await ai.models.generateContent({
-
-            model: "gemini-3.8-flash",
-
-            contents: [
-                {
-                    role: "user",
-                    parts: [
-                        {
-                            text: `${SAFAR_PROMPT}
-
-User's travel question:
-
-${message}`
-                        }
-                    ]
-                }
-            ]
-
-        });
-
-        const reply = response.text;
+        const reply = await generateSafarResponse(message);
 
         return res.json({
             reply: reply
         });
 
- } catch (error) {
-    console.error("========== GEMINI ERROR ==========");
-    console.error(error);
-    console.error("Message:", error?.message);
-    console.error("Status:", error?.status);
-    console.error("Details:", error?.details);
-    console.error("===================================");
+    } catch (error) {
 
-    return res.status(500).json({
-        error: "Gemini API failed",
-        message: error?.message || "Unknown error",
-        status: error?.status || null
-    });
-}
+        console.error("========== GEMINI ERROR ==========");
+        console.error(error);
+        console.error("Message:", error?.message);
+        console.error("Status:", error?.status);
+        console.error("===================================");
+
+        return res.status(503).json({
+            error: "Gemini is temporarily unavailable.",
+            message: error?.message || "Unknown Gemini error"
+        });
+
+    }
 
 });
-
 
 module.exports = router;
