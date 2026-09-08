@@ -110,17 +110,16 @@ async function sendChat() {
         );
 
 
-        const data =
-            await response.json();
+       const data = await response.json();
 
+typing.remove();
 
-        typing.remove();
+if (!response.ok) {
+    addMessage(data.error || "Something went wrong.", "bot");
+    return;
+}
 
-
-        addMessage(
-            data.reply,
-            "bot"
-        );
+addMessage(data.reply, "bot");
 
 
     } catch (error) {

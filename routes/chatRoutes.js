@@ -114,7 +114,7 @@ You are SAFAR AI — not a generic chatbot.
 router.post("/", async (req, res) => {
     try {
         const { message } = req.body;
-
+        console.log("Chat request received:", message);
         if (!message) {
             return res.status(400).json({
                 error: "Message is required"
@@ -154,13 +154,25 @@ for (let attempt = 1; attempt <= 3; attempt++) {
             reply: response.text
         });
 
-    } catch (error) {
-        console.error("Gemini API Error:", error);
+   } catch (error) {
+    console.error("Gemini API Error:", error);
 
-        res.status(500).json({
-            error: "Failed to get response from Gemini"
+    if (error.status === 429) {
+        return res.status(429).json({
+            error: "⚠️ SAFAR AI is temporarily unavailable because the Gemini AI request limit has been reached. Please try again later."
         });
     }
+
+    if (error.status === 503) {
+        return res.status(503).json({
+            error: "⚠️ SAFAR AI is temporarily busy. Please try again in a moment."
+        });
+    }
+
+    res.status(500).json({
+        error: "⚠️ SAFAR AI could not process your request right now."
+    });
+}
 });
 
 module.exports = router;
