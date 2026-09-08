@@ -246,16 +246,15 @@ ${message}`
             reply: reply
         });
 
-    } catch (error) {
+   } catch (error) {
 
-        console.error("Gemini Error:", error);
+    console.error("Gemini Error:", error);
 
-        // If Gemini quota/rate limit/server problem occurs,
-        // SAFAR AI still gives a response.
-        return res.json({
-            reply: getFallbackResponse(req.body.message)
-        });
-    }
+    return res.status(500).json({
+        error: "Gemini Error",
+        details: error.message
+    });
+}
 
 });
 
