@@ -115,17 +115,20 @@ Always behave as SAFAR AI.
 
 async function generateSafarResponse(message) {
 
-    const maxRetries = 3;
+    const models = [
+        "gemini-3.8-flash",
+        "gemini-3.5-flash-lite"
+    ];
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    for (const model of models) {
 
         try {
 
-            console.log(`Gemini attempt ${attempt}/${maxRetries}`);
+            console.log(`Trying Gemini model: ${model}`);
 
             const response = await ai.models.generateContent({
 
-                model: "gemini-3.8-flash",
+                model: model,
 
                 contents: [
                     {
@@ -144,36 +147,23 @@ ${message}`
 
             });
 
-            console.log("Gemini response received successfully.");
+            console.log(`Success with model: ${model}`);
 
             return response.text;
 
         } catch (error) {
 
             console.error(
-                `Gemini attempt ${attempt} failed:`,
+                `${model} failed:`,
                 error?.message || error
             );
 
-            if (error?.status === 503 && attempt < maxRetries) {
-
-                const waitTime = attempt * 3000;
-
-                console.log(
-                    `Gemini unavailable. Retrying in ${waitTime}ms...`
-                );
-
-                await new Promise(resolve =>
-                    setTimeout(resolve, waitTime)
-                );
-
-            } else {
-
-                throw error;
-
-            }
+            // Try the next model
+            continue;
         }
     }
+
+    throw new Error("All Gemini models are currently unavailable.");
 }
 
 // --------------------------------------------------
