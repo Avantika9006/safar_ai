@@ -187,13 +187,40 @@ router.post("/", async (req, res) => {
         const { message } = req.body;
 
         if (!message || !message.trim()) {
-
             return res.status(400).json({
                 error: "Please enter a travel question."
             });
-
         }
 
+        // Handle greetings without Gemini
+        const greetings = [
+            "hi",
+            "hello",
+            "hey",
+            "hii",
+            "helo",
+            "namaste",
+            "good morning",
+            "good afternoon",
+            "good evening"
+        ];
+
+        const userMessage = message.trim().toLowerCase();
+
+        if (greetings.includes(userMessage)) {
+            return res.json({
+                reply: `Hello! 👋 I'm SAFAR AI, your travel assistant.
+
+I can help you plan trips, find places to visit, estimate budgets, suggest food, and create day-by-day itineraries.
+
+Try asking:
+"Plan a 3-day trip to Agra"
+or
+"Plan a 5-day Rajasthan trip under ₹8000"`
+            });
+        }
+
+        // Gemini is called only for actual travel questions
         const reply = await generateSafarResponse(message);
 
         return res.json({
@@ -212,9 +239,7 @@ router.post("/", async (req, res) => {
             error: "Gemini is temporarily unavailable.",
             message: error?.message || "Unknown Gemini error"
         });
-
     }
-
 });
 
 module.exports = router;
