@@ -32,6 +32,7 @@ For trip-planning requests, use this structure:
 - Travel Style:
 
 ## 💰 Estimated Budget
+
 | Category | Estimated Cost |
 |----------|----------------|
 | Transport | ₹... |
@@ -42,6 +43,7 @@ For trip-planning requests, use this structure:
 | **Total** | **₹...** |
 
 ## 🗓️ Day 1 — [Place/Theme]
+
 ### 🌅 Morning
 - Activity
 - Place to visit
@@ -104,17 +106,129 @@ GENERAL RULES
 10. Do not make unsupported claims.
 11. If the budget is unrealistic, explain why and suggest alternatives.
 12. Adapt the itinerary according to the user's interests such as:
-   nature, history, food, photography, adventure, culture, spirituality,
-   family travel, or solo travel.
+    nature, history, food, photography, adventure, culture, spirituality,
+    family travel, or solo travel.
 13. Always maintain the SAFAR AI identity and tone.
 
 You are SAFAR AI — not a generic chatbot.
 `;
 
+
+// FALLBACK RESPONSE
+function getFallbackResponse(message) {
+
+    const text = message.toLowerCase();
+
+    if (text.includes("bihar")) {
+        return `
+# 🌍 SAFAR AI TRIP PLAN
+
+## 📍 Trip Overview
+- **Destination:** Bihar
+- **Duration:** 3 Days
+- **Travel Style:** Budget-friendly
+
+## 💰 Estimated Budget
+
+| Category | Estimated Cost |
+|----------|----------------|
+| Transport | ₹1,200 |
+| Accommodation | ₹1,500 |
+| Food | ₹1,200 |
+| Activities & Entry Fees | ₹500 |
+| Miscellaneous | ₹500 |
+| **Total** | **₹4,900** |
+
+## 🗓️ Day 1 — Patna
+
+### 🌅 Morning
+- Visit Golghar
+- Explore Gandhi Maidan area
+
+### ☀️ Afternoon
+- Visit Bihar Museum
+- Have a local lunch
+
+### 🌆 Evening
+- Explore Patna city
+- Enjoy local food
+
+## 🗓️ Day 2 — Bodh Gaya
+
+### 🌅 Morning
+- Travel to Bodh Gaya
+- Visit Mahabodhi Temple
+
+### ☀️ Afternoon
+- Visit Thai Monastery
+- Explore the local area
+
+### 🌆 Evening
+- Experience the peaceful atmosphere around the temple
+
+## 🗓️ Day 3 — Rajgir
+
+### 🌅 Morning
+- Travel to Rajgir
+- Visit Vishwa Shanti Stupa
+
+### ☀️ Afternoon
+- Explore Rajgir attractions
+
+### 🌆 Evening
+- Return towards Patna
+
+## 🛡️ SAFAR Safety Tips
+- Keep important documents and belongings secure.
+- Prefer reliable transportation.
+- Avoid travelling alone in unfamiliar areas late at night.
+- Check local conditions before travelling.
+
+## 💡 Money-Saving Tips
+- Prefer budget accommodation.
+- Use public transport where practical.
+- Plan nearby attractions together to reduce transport costs.
+
+## ⚠️ Important Note
+These are approximate estimates. Verify current transport fares,
+entry fees, weather and accommodation availability before travelling.
+
+*SAFAR AI fallback mode is currently active.*
+`;
+    }
+
+    return `
+# 🌍 SAFAR AI
+
+I'm currently running in **fallback mode** because the AI service
+is temporarily unavailable.
+
+I can still help with basic travel planning. Please provide:
+
+- 📍 Destination
+- 🗓️ Number of days
+- 💰 Budget
+- 👥 Number of travelers
+- ⭐ Travel interests
+
+Example:
+
+"Plan a 3-day trip to Bihar under ₹5000."
+
+*SAFAR AI fallback mode is currently active.*
+`;
+}
+
+
+// CHAT API
 router.post("/", async (req, res) => {
+
     try {
+
         const { message } = req.body;
+
         console.log("Chat request received:", message);
+
         if (!message) {
             return res.status(400).json({
                 error: "Message is required"
@@ -124,55 +238,61 @@ router.post("/", async (req, res) => {
         const prompt = `${SAFAR_PROMPT}
 
 USER MESSAGE:
+
 ${message}`;
 
         let response;
 
-for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-        response = await ai.models.generateContent({
-            model: "gemini-3.6-flash",
-            contents: prompt
-        });
+        // Try Gemini up to 3 times
+        for (let attempt = 1; attempt <= 3; attempt++) {
 
-        break;
+            try {
 
-    } catch (error) {
-        if (error.status === 503 && attempt < 3) {
-            console.log(`Gemini busy. Retrying... (${attempt}/3)`);
+                response = await ai.models.generateContent({
+                    model: "gemini-3.6-flash",
+                    contents: prompt
+                });
 
-            await new Promise(resolve =>
-                setTimeout(resolve, 2000)
-            );
-        } else {
-            throw error;
+                break;
+
+            } catch (error) {
+
+                if (error.status === 503 && attempt < 3) {
+
+                    console.log(
+                        `Gemini busy. Retrying... (${attempt}/3)`
+                    );
+
+                    await new Promise(resolve =>
+                        setTimeout(resolve, 2000)
+                    );
+
+                } else {
+
+                    throw error;
+
+                }
+            }
         }
-    }
-}
 
-        res.json({
+        // Gemini succeeded
+        return res.json({
             reply: response.text
         });
 
-   } catch (error) {
-    console.error("Gemini API Error:", error);
+    } catch (error) {
 
-    if (error.status === 429) {
-        return res.status(429).json({
-            error: "⚠️ SAFAR AI is temporarily unavailable because the Gemini AI request limit has been reached. Please try again later."
+        console.error("Gemini API Error:", error);
+
+        // Instead of showing an error to the user,
+        // use SAFAR AI fallback mode.
+        console.log("Using SAFAR AI fallback response.");
+
+        return res.json({
+            reply: getFallbackResponse(req.body.message)
         });
     }
 
-    if (error.status === 503) {
-        return res.status(503).json({
-            error: "⚠️ SAFAR AI is temporarily busy. Please try again in a moment."
-        });
-    }
-
-    res.status(500).json({
-        error: "⚠️ SAFAR AI could not process your request right now."
-    });
-}
 });
 
 module.exports = router;
