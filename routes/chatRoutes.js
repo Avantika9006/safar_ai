@@ -246,13 +246,12 @@ ${message}`
             reply: reply
         });
 
-   } catch (error) {
+  } catch (error) {
 
     console.error("Gemini Error:", error);
 
-    return res.status(500).json({
-        error: "Gemini Error",
-        details: error.message
+    return res.json({
+        reply: getFallbackResponse(req.body.message)
     });
 }
 
