@@ -6,7 +6,7 @@ SafarAI is a modern travel discovery and trip-planning web experience designed t
 
 The platform focuses on a simple idea: **travel planning should feel inspiring, not complicated.**
 
-🔗 **Live Demo:** https://safarai-cyan.vercel.app/
+🔗 **Live Demo:** https://safar-ai-88ab.onrender.com/
 
 ---
 
