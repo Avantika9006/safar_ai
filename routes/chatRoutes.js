@@ -4,6 +4,7 @@ const { GoogleGenAI } = require("@google/genai");
 const router = express.Router();
 
 const ai = new GoogleGenAI({
+
     apiKey: process.env.GEMINI_API_KEY
 });
 
@@ -254,7 +255,7 @@ router.post("/", async (req, res) => {
 
         const response = await ai.models.generateContent({
 
-            model: "gemini-3.6-flash",
+            model: "gemini-3.8-flash",
 
             contents: [
                 {
