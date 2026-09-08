@@ -118,147 +118,370 @@ You are SAFAR AI — not a generic chatbot.
 
    function getFallbackResponse(message) {
 
-    const text = message.trim();
+    const text = message.toLowerCase();
+
+    // =========================
+    // HIMACHAL PRADESH
+    // =========================
+    if (
+        text.includes("himachal") ||
+        text.includes("manali") ||
+        text.includes("shimla")
+    ) {
+        return `
+# 🌍 SAFAR AI — Himachal Pradesh Trip Plan
+
+## 📍 Trip Overview
+
+- **Destination:** Himachal Pradesh
+- **Duration:** 3 Days
+- **Best for:** Mountains, nature, sightseeing & local food
+- **Travel Style:** Budget-friendly
+
+## 💰 Approximate Budget
+
+| Category | Estimated Cost |
+|---|---:|
+| Transport | ₹1,500–₹2,500 |
+| Stay | ₹1,500–₹2,500 |
+| Food | ₹1,000–₹1,500 |
+| Sightseeing | ₹500–₹1,000 |
+| **Total** | **₹4,500–₹7,500 approx.** |
+
+## 🗓️ DAY 1 — SHIMLA 🏔️
+
+### 🌅 Morning
+📍 **The Ridge & Christ Church**
+- Walk around The Ridge.
+- Enjoy the mountain views.
+- Visit the historic Christ Church.
+
+### ☀️ Afternoon
+📍 **Mall Road**
+- Explore Mall Road.
+- Try local cafés and street food.
+- Visit **Lakkar Bazaar** for wooden handicrafts.
+
+### 🌆 Evening
+📍 **Jakhoo Temple**
+- Visit the famous hilltop temple.
+- Enjoy panoramic views of Shimla.
+
+### 🍽️ Try These
+- Himachali Dham
+- Siddu
+- Momos
+- Chai
+
+## 🗓️ DAY 2 — MANALI 🌲
+
+### 🌅 Morning
+📍 **Hadimba Temple**
+- Visit the famous cedar-forest temple.
+- Explore the surrounding forest.
+
+### ☀️ Afternoon
+📍 **Old Manali**
+- Explore cafés and local shops.
+- Walk around the riverside area.
+
+### 🌆 Evening
+📍 **Mall Road, Manali**
+- Shopping and local food.
+- Relax and enjoy the mountain atmosphere.
+
+### 🍽️ Try These
+- Siddu
+- Thukpa
+- Momos
+- Chana Madra
+
+## 🗓️ DAY 3 — SOLANG VALLEY ❄️
+
+### 🌅 Morning
+📍 **Solang Valley**
+- Enjoy beautiful mountain scenery.
+- Try suitable seasonal activities.
+
+### ☀️ Afternoon
+📍 **Atal Tunnel / nearby sightseeing**
+- Visit if travel conditions and time permit.
+- Check local road conditions before travelling.
+
+### 🌆 Evening
+- Return towards Manali.
+- Shop for local souvenirs.
+
+## 🚗 HOW TO TRAVEL
+
+- Use buses/Volvo services for major routes.
+- Use local cabs for sightseeing.
+- Shared taxis can help reduce costs.
+- Mountain travel can take longer than expected.
+
+## 🏨 WHERE TO STAY
+
+**Shimla:** Stay around the main town or nearby accessible areas.
+
+**Manali:** Old Manali or areas close to the main market can be convenient.
+
+Choose budget hotels/hostels/homestays and verify current prices before booking.
+
+## ⭐ MUST-VISIT PLACES
+
+🏔️ The Ridge  
+🌲 Old Manali  
+🛕 Hadimba Temple  
+❄️ Solang Valley  
+🛍️ Mall Road  
+🌳 Lakkar Bazaar  
+
+## 🛡️ SAFAR SAFETY TIPS
+
+- Check weather and road conditions before mountain travel.
+- Carry warm clothing.
+- Keep some cash for local transport.
+- Avoid travelling on unfamiliar mountain roads late at night.
+- Follow local instructions at high-altitude locations.
+
+## 💡 SAVE MONEY
+
+- Use buses/shared transport.
+- Choose budget accommodation.
+- Eat at local restaurants.
+- Group nearby attractions together.
+
+## ⚠️ SAFAR NOTE
+
+Travel time, weather, road conditions, entry fees and accommodation
+prices can change. Verify the latest information before travelling.
+
+*SAFAR AI is currently using its travel fallback database.*
+`;
+    }
+
+
+    // =========================
+    // GOA
+    // =========================
+    if (text.includes("goa")) {
+        return `
+# 🌴 SAFAR AI — Goa Trip Plan
+
+## 📍 Trip Overview
+
+- **Duration:** 3 Days
+- **Best for:** Beaches, food, sightseeing & relaxation
+
+## 🗓️ DAY 1 — NORTH GOA
+
+🏖️ Baga Beach  
+🏖️ Calangute Beach  
+🏰 Fort Aguada  
+
+### 🍽️ Try
+- Goan fish curry
+- Poi bread
+- Bebinca
+
+## 🗓️ DAY 2 — OLD GOA
+
+⛪ Basilica of Bom Jesus  
+⛪ Se Cathedral  
+🌊 Miramar Beach  
+🌅 Sunset experience
+
+## 🗓️ DAY 3 — SOUTH GOA
+
+🏖️ Palolem Beach  
+🌴 Colva Beach  
+🛍️ Local market
+
+## 💰 Budget
+
+Approximately **₹5,000–₹8,000 per person**, depending on transport and stay.
+
+Verify current prices before booking.
+
+*SAFAR AI fallback mode.*
+`;
+    }
+
+
+    // =========================
+    // RAJASTHAN
+    // =========================
+    if (text.includes("rajasthan") || text.includes("jaipur")) {
+        return `
+# 🕌 SAFAR AI — Rajasthan Trip Plan
+
+## 🗓️ DAY 1 — JAIPUR
+
+🏰 Amber Fort  
+🏛️ City Palace  
+📸 Hawa Mahal  
+🛍️ Johari Bazaar
+
+### 🍽️ Try
+- Dal Baati Churma
+- Ghewar
+- Pyaaz Kachori
+
+## 🗓️ DAY 2 — JAIPUR
+
+🌅 Nahargarh Fort  
+🔭 Jantar Mantar  
+🏛️ Albert Hall Museum  
+🌆 Local market
+
+## 🗓️ DAY 3 — LOCAL EXPERIENCE
+
+🎨 Explore handicraft markets  
+🍽️ Try traditional Rajasthani food  
+📸 Explore historic streets
+
+**Estimated budget:** ₹5,000–₹8,000 excluding long-distance travel.
+
+*SAFAR AI fallback mode.*
+`;
+    }
+
+
+    // =========================
+    // KERALA
+    // =========================
+    if (text.includes("kerala") || text.includes("munnar") || text.includes("alleppey")) {
+        return `
+# 🌴 SAFAR AI — Kerala Trip Plan
+
+## 🗓️ DAY 1 — KOCHI
+
+🏛️ Fort Kochi  
+🎨 Chinese Fishing Nets  
+⛪ St. Francis Church  
+🌅 Marine Drive
+
+## 🗓️ DAY 2 — MUNNAR
+
+🌿 Tea Gardens  
+🏔️ Mountain viewpoints  
+🌱 Tea Museum
+
+## 🗓️ DAY 3 — ALLEPPEY
+
+🚤 Backwater experience  
+🌴 Explore local surroundings  
+🍛 Try traditional Kerala cuisine
+
+### 🍽️ Try
+- Appam & stew
+- Kerala Sadya
+- Puttu & kadala curry
+
+**Estimated budget:** ₹6,000–₹10,000 depending on stay and transport.
+
+*SAFAR AI fallback mode.*
+`;
+    }
+
+
+    // =========================
+    // BIHAR
+    // =========================
+    if (text.includes("bihar") || text.includes("bodh gaya") || text.includes("rajgir")) {
+        return `
+# 🏛️ SAFAR AI — Bihar Trip Plan
+
+## 🗓️ DAY 1 — PATNA
+
+🏛️ Bihar Museum  
+🏛️ Golghar  
+🌳 Gandhi Maidan
+
+### 🍽️ Try
+- Litti Chokha
+- Sattu Sharbat
+
+## 🗓️ DAY 2 — BODH GAYA
+
+🛕 Mahabodhi Temple  
+🏯 Thai Monastery  
+🌳 Great Buddha Statue
+
+## 🗓️ DAY 3 — RAJGIR
+
+🏔️ Vishwa Shanti Stupa  
+🏛️ Rajgir historical sites  
+🌳 Local sightseeing
+
+**Estimated budget:** ₹4,000–₹7,000 depending on transport and accommodation.
+
+*SAFAR AI fallback mode.*
+`;
+    }
+
+
+    // =========================
+    // UNKNOWN DESTINATION
+    // =========================
 
     let destination = "your destination";
 
-    const patterns = [
-        /trip to (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i,
-        /travel to (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i,
-        /visit (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i,
-        /trip in (.+?)(?:\s+under|\s+for|\s+with|\s+on|$)/i
-    ];
-
-    for (const pattern of patterns) {
-        const match = text.match(pattern);
-
-        if (match && match[1]) {
-            destination = match[1].trim();
-            break;
-        }
-    }
-
-    let duration = "3 days";
-
-    const durationMatch = text.match(
-        /(\d+)\s*(?:day|days|night|nights)/i
+    const match = message.match(
+        /(?:trip to|travel to|visit|trip in)\\s+(.+?)(?:\\s+under|\\s+for|\\s+with|$)/i
     );
 
-    if (durationMatch) {
-        duration = `${durationMatch[1]} days`;
-    }
-
-    let budget = "Not specified";
-
-    const budgetMatch = text.match(
-        /(?:₹|rs\.?|inr)\s*([\d,]+)|(?:under|budget of)\s*(?:₹|rs\.?|inr)?\s*([\d,]+)/i
-    );
-
-    if (budgetMatch) {
-        const amount = budgetMatch[1] || budgetMatch[2];
-        budget = `₹${amount}`;
+    if (match) {
+        destination = match[1].trim();
     }
 
     return `
 # 🌍 SAFAR AI TRIP PLAN
 
-## 📍 Trip Overview
+## 📍 ${destination}
 
-- **Destination:** ${destination}
-- **Duration:** ${duration}
-- **Budget:** ${budget}
-- **Travel Style:** Budget-friendly
+I can help you plan a trip to **${destination}**.
 
-## 💰 Estimated Budget
+### 🗓️ Suggested 3-Day Structure
 
-| Category | Estimated Cost |
-|----------|----------------|
-| Transport | ₹1,500 |
-| Accommodation | ₹2,000 |
-| Food | ₹1,500 |
-| Activities & Entry Fees | ₹700 |
-| Miscellaneous | ₹500 |
-| **Total** | **₹6,200 approx.** |
+**DAY 1 — Main Attractions**
+- Visit the most popular landmark.
+- Explore the local area.
+- Try regional food.
 
-## 🗓️ Day 1 — Explore ${destination}
+**DAY 2 — Experiences**
+- Explore cultural, historical or natural attractions.
+- Visit a local market.
+- Enjoy a local food experience.
 
-### 🌅 Morning
-- Explore the main attractions of ${destination}.
-- Visit a popular landmark or sightseeing location.
+**DAY 3 — Hidden Gems**
+- Explore a less-crowded attraction.
+- Try a local activity.
+- Shop for local souvenirs.
 
-### ☀️ Afternoon
-- Explore nearby attractions.
-- Experience local cuisine.
+### 🍽️ Food
 
-### 🌆 Evening
-- Explore a local market or popular evening spot.
+Try authentic local cuisine and popular regional dishes.
 
-## 🗓️ Day 2 — Local Experiences
+### 🚗 Transportation
 
-### 🌅 Morning
-- Visit another important attraction around ${destination}.
-- Explore the local culture and surroundings.
+Use public transport or reliable local taxis where practical.
 
-### ☀️ Afternoon
-- Try a local activity or visit a historical/natural attraction.
+### 🏨 Stay
 
-### 🌆 Evening
-- Visit a scenic or popular evening location.
+Consider budget hotels, hostels or homestays near major attractions.
 
-## 🗓️ Day 3 — Hidden Gems & Relaxation
+### 🛡️ Safety
 
-### 🌅 Morning
-- Explore a less-crowded location near ${destination}.
-- Take photographs and enjoy the surroundings.
+Check current weather, transport conditions and local travel advisories
+before travelling.
 
-### ☀️ Afternoon
-- Try another local experience.
-- Have a relaxed lunch.
+### ⚠️ Important
 
-### 🌆 Evening
-- Visit a local market for souvenirs.
-- Prepare for your return journey.
-
-## 🏨 Stay Recommendations
-
-- Choose budget hotels, hostels, or homestays.
-- Prefer accommodation close to major attractions or public transport.
-- Verify current prices and availability before booking.
-
-## 🚗 Transportation
-
-- Use public transportation wherever practical.
-- For nearby attractions, consider shared/local transport.
-- Compare transportation options before travelling.
-
-## ⭐ Hidden Gems
-
-- Explore local markets.
-- Ask locals about less-crowded attractions.
-- Look for local food and cultural experiences.
-
-## 🛡️ SAFAR Safety Tips
-
-- Keep your belongings and important documents secure.
-- Prefer reliable transportation.
-- Check local weather and travel conditions.
-- Avoid unfamiliar areas late at night.
-- Keep emergency contacts accessible.
-
-## 💡 Money-Saving Tips
-
-- Prefer budget accommodation.
-- Use public transportation where practical.
-- Eat at local restaurants.
-- Group nearby attractions together to reduce transportation costs.
-
-## ⚠️ Important Note
-
-This is SAFAR AI's fallback travel plan because the AI service
-is temporarily unavailable.
-
-Prices, weather, transportation, entry fees and accommodation
-availability can change. Verify the latest information before travelling.
+This is a fallback plan because the AI service is temporarily unavailable.
+For accurate current prices, weather, hotel availability and detailed
+destination-specific recommendations, verify the latest information
+before travelling.
 
 *SAFAR AI fallback mode is currently active.*
 `;
