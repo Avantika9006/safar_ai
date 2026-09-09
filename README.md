@@ -15,7 +15,7 @@ The platform focuses on a simple idea: **travel planning should feel inspiring, 
 
 ### Home / Hero
 
-![SafarAI Home](./media/Screenshot%202026-09-04%20235823.png)
+![SafarAI Home](./media/safarai-og-image.png)
 
 ## ✨ Features
 
@@ -1084,7 +1084,7 @@ MIT License
 
 **Travel thoughtfully. Explore freely. Create unforgettable stories.**
 
-🔗 **Live Website:** https://safarai-cyan.vercel.app/
+🔗 **Live Website:** https://safar-ai-88ab.onrender.com/
 
 ---
 
