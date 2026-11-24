@@ -120,31 +120,47 @@ Always behave as SAFAR AI.
 
 
 
-async function generateSafarResponse(message) {
-    try {
-        console.log("Trying Gemini model: gemini-3.1-flash-lite");
 
-        const response = await ai.models.generateContent({
-            model: "gemini-3.1-flash-lite",
-            contents: `${SAFAR_PROMPT}
+async function generateSafarResponse(message) {
+    const models = [
+        "gemini-3.1-flash-lite",
+        "gemini-flash-lite-latest"
+    ];
+
+    let lastError;
+
+    for (const model of models) {
+        try {
+            console.log(`Trying Gemini model: ${model}`);
+
+            const response = await ai.models.generateContent({
+                model: model,
+                contents: `${SAFAR_PROMPT}
 
 User's travel question:
 
 ${message}`
-        });
+            });
 
-        console.log("Gemini API SUCCESS");
+            console.log(`Gemini API SUCCESS: ${model}`);
 
-        return response.text;
+            return response.text;
 
-    } catch (error) {
-        console.error("========== GEMINI ERROR ==========");
-        console.error("Message:", error?.message || error);
-        console.error("Status:", error?.status);
-        console.error("==================================");
+        } catch (error) {
+            lastError = error;
 
-        throw error;
+            console.error(`${model} failed:`, error?.message || error);
+
+            const status = error?.status || error?.code;
+
+            // Retry another model only for temporary/limit errors
+            if (status !== 429 && status !== 503 && status !== 500) {
+                throw error;
+            }
+        }
     }
+
+    throw lastError || new Error("All Gemini models failed.");
 }
 
 
