@@ -120,28 +120,54 @@ Always behave as SAFAR AI.
 
 
 async function generateSafarResponse(message) {
-  try {
-    console.log("Testing Gemini model: gemini-3.8-flash");
+  const models = [
+        "gemini-3.5-flash-lite"
+    ];
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.8-flash",
-      contents: `${SAFAR_PROMPT}
+    for (const model of models) {
+
+        try {
+
+            console.log(`Trying Gemini model: ${model}`);
+
+            const response = await ai.models.generateContent({
+
+                model: model,
+
+                contents: [
+                    {
+                        role: "user",
+                        parts: [
+                            {
+                                text: `${SAFAR_PROMPT}
 
 User's travel question:
-${message}`,
-      config: {
-        maxOutputTokens: 2048
-      }
-    });
 
-    console.log("Gemini API SUCCESS");
-    return response.text;
+${message}`
+                            }
+                        ]
+                    }
+                ]
 
-  } catch (error) {
-    console.error("GEMINI STATUS:", error?.status);
-    console.error("GEMINI MESSAGE:", error?.message);
-    throw error;
-  }
+            });
+
+            console.log(`Success with model: ${model}`);
+
+            return response.text;
+
+        } catch (error) {
+
+            console.error(
+                `${model} failed:`,
+                error?.message || error
+            );
+
+            // Try the next model
+            continue;
+        }
+    }
+
+    throw new Error("All Gemini models are currently unavailable.");
 }
 
 // --------------------------------------------------
