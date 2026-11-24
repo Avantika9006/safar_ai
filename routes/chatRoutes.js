@@ -117,59 +117,90 @@ Always behave as SAFAR AI.
 
    
 
-async function generateSafarResponse(message) {
 
- const models = [
+async function generateSafarResponse(message) {
+    const models = [
         "gemini-3.8-flash",
         "gemini-3.5-flash-lite"
     ];
 
+    let lastError = null;
+
     for (const model of models) {
 
-        try {
+        // Try each model up to 2 times
+        for (let attempt = 1; attempt <= 2; attempt++) {
 
-            console.log(`Trying Gemini model: ${model}`);
+            try {
+                console.log(
+                    `Trying ${model} (attempt ${attempt}/2)`
+                );
 
-            const response = await ai.models.generateContent({
-
-                model: model,
-
-                contents: [
-                    {
-                        role: "user",
-                        parts: [
-                            {
-                                text: `${SAFAR_PROMPT}
+                const response = await ai.models.generateContent({
+                    model: model,
+                    contents: [
+                        {
+                            role: "user",
+                            parts: [
+                                {
+                                    text: `${SAFAR_PROMPT}
 
 User's travel question:
 
 ${message}`
-                            }
-                        ]
-                    }
-                ]
+                                }
+                            ]
+                        }
+                    ]
+                });
 
-            });
+                console.log(`Success with model: ${model}`);
 
-            console.log(`Success with model: ${model}`);
+                return response.text;
 
-            return response.text;
+            } catch (error) {
 
-        } catch (error) {
+                lastError = error;
 
-            console.error(
-                `${model} failed:`,
-                error?.message || error
-            );
+                const errorMessage =
+                    error?.message || String(error);
 
-            // Try the next model
-            continue;
+                const status = Number(error?.status || error?.code);
+
+                console.error(`${model} failed:`, errorMessage);
+
+                const isTemporaryError =
+                    status === 503 ||
+                    status === 502 ||
+                    status === 500 ||
+                    status === 504 ||
+                    /UNAVAILABLE|high demand/i.test(errorMessage);
+
+                // Retry temporary errors once
+                if (isTemporaryError && attempt < 2) {
+                    const delay = 2000 * attempt;
+
+                    console.log(
+                        `Temporary error. Retrying in ${delay / 1000} seconds...`
+                    );
+
+                    await new Promise(resolve =>
+                        setTimeout(resolve, delay)
+                    );
+
+                    continue;
+                }
+
+                // Move to the next model
+                break;
+            }
         }
     }
 
-    throw new Error("All Gemini models are currently unavailable.");
+    throw lastError || new Error(
+        "All Gemini models failed."
+    );
 }
-
 
 // --------------------------------------------------
 // CHAT API
