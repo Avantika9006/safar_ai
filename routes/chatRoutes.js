@@ -118,57 +118,41 @@ Always behave as SAFAR AI.
    
 
 
+
 async function generateSafarResponse(message) {
-    const models = [
-        "gemini-3.8-flash",
-        "gemini-3.5-flash-lite"
-    ];
+   const models = [
+  "models/gemini-3.8-flash"
+];
 
-    for (const model of models) {
+    try {
+        console.log("Trying Gemini model:", model);
 
-        try {
-
-            console.log(`Trying Gemini model: ${model}`);
-
-            const response = await ai.models.generateContent({
-
-                model: model,
-
-                contents: [
-                    {
-                        role: "user",
-                        parts: [
-                            {
-                                text: `${SAFAR_PROMPT}
+        const response = await ai.models.generateContent({
+            model: model,
+            contents: `${SAFAR_PROMPT}
 
 User's travel question:
 
 ${message}`
-                            }
-                        ]
-                    }
-                ]
+        });
 
-            });
+        console.log("Gemini response received successfully");
 
-            console.log(`Success with model: ${model}`);
+        return response.text;
 
-            return response.text;
+    } catch (error) {
+        console.error("========== GEMINI API ERROR ==========");
+        console.error("Message:", error?.message);
+        console.error("Status:", error?.status);
+        console.error("Code:", error?.code);
+        console.error("Name:", error?.name);
+        console.error("Details:", error?.details);
+        console.error("======================================");
 
-        } catch (error) {
-
-            console.error(
-                `${model} failed:`,
-                error?.message || error
-            );
-
-            // Try the next model
-            continue;
-        }
+        throw error;
     }
-
-    throw new Error("All Gemini models are currently unavailable.");
 }
+
 // --------------------------------------------------
 // CHAT API
 // --------------------------------------------------
