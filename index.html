@@ -48,13 +48,17 @@
         href="/media/favicon.png"
         type="image/png"
     >
-
     <link
         rel="apple-touch-icon"
         href="/media/favicon.png"
     >
-
-
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    
+    
     <!-- =========================
          OPEN GRAPH
          Used when sharing website
@@ -354,9 +358,165 @@
  <!-- ================= AI CHATBOX ================= -->
 
      
-   <button id="aiChatButton" class="ai-chat-button">
+ <button id="mapButton" class="map-button" title="Explore Map">
+    🗺️
+ </button>
+  ```html
+<!-- ================= MAP ================= -->
+
+<div id="mapContainer" class="map-container">
+<div id="spots-list"></div>
+    <div class="map-header">
+
+        <h3>🗺️ Explore Destination</h3>
+
+        <button id="closeMap">✕</button>
+
+    </div>
+
+
+    <!-- SEARCH DESTINATION -->
+
+    <div class="map-search">
+
+        <input
+            type="text"
+            id="destinationInput"
+            placeholder="Search destination..."
+        >
+
+        <button id="searchDestination">
+            Search
+        </button>
+
+    </div>
+
+
+    <!-- MAP -->
+
+    <div id="map"></div>
+
+   <div id="spotInfo" class="spot-info" style="display: none;">
+
+    <h3 id="spotName">Selected Place</h3>
+
+    <div class="info-row">
+        <span>🚗 Distance</span>
+        <strong id="spotDistance">--</strong>
+    </div>
+
+    <div class="info-row">
+        <span>⏱ Travel Time</span>
+        <strong id="spotDuration">--</strong>
+    </div>
+
+    <div class="info-row">
+        <span>🏙️ Population Density</span>
+        <strong id="populationDensity">Loading...</strong>
+    </div>
+
+    <div class="info-row">
+        <span>👥 Current Crowd</span>
+        <strong id="crowdLevel">Loading...</strong>
+    </div>
+
+    <div id="safarTip" class="safar-tip">
+        💡 SAFAR AI Tip will appear here.
+    </div>
+
+</div> 
+
+
+    <!-- NEARBY PLACES -->
+
+    <div class="nearby-section">
+
+        <h3>📍 Nearby Places</h3>
+
+        <div id="spots-list">
+
+            <p>
+                Search a destination to discover nearby places.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SELECTED PLACE INFORMATION -->
+
+    <div
+        id="spotInfo"
+        class="spot-info"
+        style="display:none;"
+    >
+
+        <h3 id="spotName">
+            Selected Place
+        </h3>
+
+
+        <div class="info-row">
+
+            <span>🚗 Distance</span>
+
+            <strong id="spotDistance">
+                --
+            </strong>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <span>⏱ Travel Time</span>
+
+            <strong id="spotDuration">
+                --
+            </strong>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <span>🏙️ Population Density</span>
+
+            <strong id="populationDensity">
+                Loading...
+            </strong>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <span>👥 Current Crowd</span>
+
+            <strong id="crowdLevel">
+                Loading...
+            </strong>
+
+        </div>
+
+
+        <!-- SAFAR AI TIP -->
+
+        <div id="safarTip" class="safar-tip">
+
+            💡 SAFAR AI Tip will appear here.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+ <button id="aiChatButton" class="ai-chat-button">
     <span>✈</span>
-</button>
+ </button>
 
 <div class="ai-chatbox" id="aiChatbox">
 
@@ -379,7 +539,7 @@
         </div>
 
     </div>
-
+ 
     <div class="chat-input-area">
 
         <input
@@ -1371,9 +1531,18 @@
 
             </footer>
 
-
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
             <script src="/static/javaScript/homepage.js"></script>
+            <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
-</body>
+            <!-- Embedded Google Maps Modal -->
+<div id="googleMapModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+    <div style="position:relative; width:90%; max-width:800px; height:80%; background:#fff; border-radius:12px; overflow:hidden;">
+        <button id="closeGoogleMap" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer; z-index:10000; color:#000;">✕</button>
+        <iframe id="googleMapIframe" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>
+    </div>
+</div>
+
+        </body>
 
 </html>

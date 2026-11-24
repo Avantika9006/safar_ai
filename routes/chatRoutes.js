@@ -115,56 +115,100 @@ Always behave as SAFAR AI.
 
 async function generateSafarResponse(message) {
 
-    const models = [
-        "gemini-3.8-flash",
-        "gemini-3.5-flash-lite"
-    ];
+   
+const delay = (ms) =>
+    new Promise(resolve => setTimeout(resolve, ms));
+
+async function generateSafarResponse(message) {
+
+    // Only add model IDs verified for your API key.
+    const models = (process.env.GEMINI_MODELS || "")
+        .split(",")
+        .map(model => model.trim())
+        .filter(Boolean);
+
+    if (models.length === 0) {
+        throw new Error(
+            "No Gemini models configured. Set GEMINI_MODELS in Render."
+        );
+    }
+
+    const errors = [];
 
     for (const model of models) {
 
-        try {
+        // Retry temporary 503 errors up to 3 times.
+        for (let attempt = 1; attempt <= 3; attempt++) {
 
-            console.log(`Trying Gemini model: ${model}`);
+            try {
+                console.log(
+                    `Trying ${model}, attempt ${attempt}`
+                );
 
-            const response = await ai.models.generateContent({
-
-                model: model,
-
-                contents: [
-                    {
-                        role: "user",
-                        parts: [
-                            {
-                                text: `${SAFAR_PROMPT}
+                const response = await ai.models.generateContent({
+                    model: model,
+                    contents: `${SAFAR_PROMPT}
 
 User's travel question:
 
 ${message}`
-                            }
-                        ]
+                });
+
+                if (!response.text) {
+                    throw new Error("Gemini returned an empty response.");
+                }
+
+                console.log(`Success with model: ${model}`);
+
+                return response.text;
+
+            } catch (error) {
+
+                const errorMessage =
+                    error?.message || String(error);
+
+                const status = Number(
+                    error?.status ||
+                    error?.code ||
+                    errorMessage.match(/\b(429|500|502|503|504)\b/)?.[0]
+                );
+
+                console.error(
+                    `${model} failed (attempt ${attempt}):`,
+                    errorMessage
+                );
+
+                errors.push(`${model}: ${errorMessage}`);
+
+                // Retry only temporary server errors.
+                if (status === 503 || status === 500 ||
+                    status === 502 || status === 504) {
+
+                    if (attempt < 3) {
+                        const waitTime =
+                            1500 * Math.pow(2, attempt - 1);
+
+                        console.log(
+                            `Retrying after ${waitTime}ms`
+                        );
+
+                        await delay(waitTime);
+                        continue;
                     }
-                ]
+                }
 
-            });
-
-            console.log(`Success with model: ${model}`);
-
-            return response.text;
-
-        } catch (error) {
-
-            console.error(
-                `${model} failed:`,
-                error?.message || error
-            );
-
-            // Try the next model
-            continue;
+                // Try the next model.
+                break;
+            }
         }
     }
 
-    throw new Error("All Gemini models are currently unavailable.");
+    throw new Error(
+        "All configured Gemini models failed. " +
+        errors.join(" | ")
+    );
 }
+
 
 // --------------------------------------------------
 // CHAT API
