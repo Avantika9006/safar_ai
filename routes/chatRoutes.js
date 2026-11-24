@@ -113,7 +113,7 @@ Always behave as SAFAR AI.
 // GENERATE GEMINI RESPONSE WITH RETRY
 // --------------------------------------------------
 
-async function generateSafarResponse(message) {
+
 
    
 const delay = (ms) =>
