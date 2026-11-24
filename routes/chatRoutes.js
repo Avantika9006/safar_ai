@@ -120,10 +120,7 @@ Always behave as SAFAR AI.
 
 
 async function generateSafarResponse(message) {
-   const models = [
-  "models/gemini-3.8-flash"
-];
-
+  const model = "gemini-3.8-flash";
     try {
         console.log("Trying Gemini model:", model);
 
