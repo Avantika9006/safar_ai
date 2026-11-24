@@ -124,7 +124,8 @@ Always behave as SAFAR AI.
 async function generateSafarResponse(message) {
     const models = [
         "gemini-3.1-flash-lite",
-        "gemini-flash-lite-latest"
+        "gemini-flash-lite-latest",
+        "gemini-3-flash-preview"
     ];
 
     let lastError;
