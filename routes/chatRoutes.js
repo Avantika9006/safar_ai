@@ -156,6 +156,33 @@ If no trip has been created yet and the conversation is not about trip planning,
 When updating an existing trip, preserve all previous information that has not changed.
 
 
+CRITICAL ITINERARY DISPLAY RULES:
+
+1. Whenever a user asks for a trip plan, the "reply" field MUST contain the COMPLETE itinerary.
+
+2. Never provide only an introduction, summary, or statement such as "Here is your itinerary".
+
+3. For a 10-day trip, include Day 1 through Day 10 in the reply.
+
+4. Every day must contain:
+   - Morning activities
+   - Afternoon activities
+   - Evening activities
+   - Specific places to visit
+   - Approximate transportation costs
+   - Approximate activity costs
+
+5. Include the budget breakdown after the day-by-day itinerary.
+
+6. The complete itinerary must be readable directly in the chatbot.
+
+7. The tripState.itinerary must also contain the updated itinerary for future modifications.
+
+8. If the user says "show me the plan", retrieve the latest saved itinerary and display the COMPLETE plan in reply.
+
+9. Never replace a previously generated itinerary with a short introduction.
+
+
 `;
 
 // --------------------------------------------------
@@ -248,6 +275,9 @@ Return valid JSON in the required response format.
 
             const rawResponse = response.text;
 
+            console.log("========== GEMINI RAW RESPONSE ==========");
+            console.log(rawResponse);
+            console.log("=========================================");
             let result;
 
             try {
