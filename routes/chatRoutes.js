@@ -107,6 +107,55 @@ estimated costs.
 Do NOT ask the user to provide the destination, duration or budget again.
 
 Always behave as SAFAR AI.
+
+CONVERSATION MEMORY RULES:
+
+1. Remember the complete conversation history provided to you.
+2. Remember the user's destination, duration, budget and travel preferences.
+3. Remember the latest itinerary, including all previous changes.
+4. If the user says "change Day 3", understand which trip they are referring to.
+5. Change ONLY the requested day. Keep all unaffected days unchanged.
+6. If weather, closures or other problems affect a place, suggest suitable alternatives.
+7. Recalculate the estimated budget when itinerary changes affect costs.
+8. Do not ask the user to repeat information already available in the conversation or trip state.
+
+TRIP STATE:
+
+Maintain these fields:
+- destination
+- duration
+- budget
+- interests
+- itinerary
+- completedDays
+- changes
+- remainingBudget
+
+When a trip is being planned or updated, return the complete updated trip state.
+
+RESPONSE FORMAT:
+
+Always return valid JSON in this exact structure:
+
+{
+  "reply": "Your normal conversational response to the user",
+  "tripState": {
+    "destination": "Destination",
+    "duration": "Number of days",
+    "budget": "Trip budget",
+    "interests": [],
+    "itinerary": {},
+    "completedDays": [],
+    "changes": [],
+    "remainingBudget": "Estimated remaining budget"
+  }
+}
+
+If no trip has been created yet and the conversation is not about trip planning, tripState can be null.
+
+When updating an existing trip, preserve all previous information that has not changed.
+
+
 `;
 
 // --------------------------------------------------
@@ -121,7 +170,9 @@ Always behave as SAFAR AI.
 
 
 
-async function generateSafarResponse(message) {
+
+async function generateSafarResponse(message, history = [], tripState = null) {
+
     const models = [
         "gemini-3.1-flash-lite",
         "gemini-flash-lite-latest",
@@ -130,39 +181,121 @@ async function generateSafarResponse(message) {
 
     let lastError;
 
+    // Validate and limit conversation history
+    const safeHistory = Array.isArray(history)
+        ? history
+            .filter(item =>
+                item &&
+                ["user", "assistant"].includes(item.role) &&
+                typeof item.content === "string"
+            )
+            .slice(-20)
+        : [];
+
+    // Avoid sending the latest user message twice
+    const lastMessage = safeHistory[safeHistory.length - 1];
+
+    if (
+        !lastMessage ||
+        lastMessage.role !== "user" ||
+        lastMessage.content.trim() !== message.trim()
+    ) {
+        safeHistory.push({
+            role: "user",
+            content: message
+        });
+    }
+
+    // Convert frontend history into Gemini format
+    const contents = safeHistory.map(item => ({
+        role: item.role === "assistant" ? "model" : "user",
+        parts: [{ text: item.content }]
+    }));
+
+    // Include current trip information
+    const systemPrompt = `
+${SAFAR_PROMPT}
+
+CURRENT TRIP STATE:
+
+${JSON.stringify(tripState || {}, null, 2)}
+
+Use the conversation history and current trip state together.
+Preserve the existing itinerary when making changes.
+Return valid JSON in the required response format.
+`;
+
     for (const model of models) {
+
         try {
+
             console.log(`Trying Gemini model: ${model}`);
 
             const response = await ai.models.generateContent({
+
                 model: model,
-                contents: `${SAFAR_PROMPT}
 
-User's travel question:
+                contents: contents,
 
-${message}`
+                config: {
+                    systemInstruction: systemPrompt,
+                    responseMimeType: "application/json"
+                }
+
             });
 
             console.log(`Gemini API SUCCESS: ${model}`);
 
-            return response.text;
+            const rawResponse = response.text;
+
+            let result;
+
+            try {
+                result = JSON.parse(rawResponse);
+            } catch (parseError) {
+
+                console.error("Gemini returned invalid JSON:", rawResponse);
+
+                return {
+                    reply: rawResponse,
+                    tripState: tripState
+                };
+
+            }
+
+            return {
+                reply: result.reply || "Your trip plan is ready!",
+                tripState: result.tripState ?? tripState
+            };
 
         } catch (error) {
+
             lastError = error;
 
-            console.error(`${model} failed:`, error?.message || error);
+            console.error(
+                `${model} failed:`,
+                error?.message || error
+            );
 
             const status = error?.status || error?.code;
 
-            // Retry another model only for temporary/limit errors
-            if (status !== 429 && status !== 503 && status !== 500) {
+            // Try the next model for temporary or limit errors
+            if (
+                status !== 429 &&
+                status !== 503 &&
+                status !== 500
+            ) {
                 throw error;
             }
+
         }
+
     }
 
     throw lastError || new Error("All Gemini models failed.");
+
 }
+
 
 
 // --------------------------------------------------
@@ -173,7 +306,7 @@ router.post("/", async (req, res) => {
 
     try {
 
-        const { message } = req.body;
+       const { message, history, tripState } = req.body;
 
         if (!message || !message.trim()) {
             return res.status(400).json({
@@ -210,11 +343,16 @@ or
         }
 
         // Gemini is called only for actual travel questions
-        const reply = await generateSafarResponse(message);
+      const result = await generateSafarResponse(
+    message,
+    history,
+    tripState
+);
 
-        return res.json({
-            reply: reply
-        });
+       return res.json({
+    reply: result.reply,
+    tripState: result.tripState
+});
 
     } catch (error) {
 

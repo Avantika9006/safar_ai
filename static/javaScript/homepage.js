@@ -38,6 +38,45 @@ const chatInput =
 const chatMessages =
     document.getElementById("chatMessages");
 
+
+
+// ===============================
+// SAFAR AI - CONVERSATION MEMORY
+// ===============================
+
+let chatHistory = JSON.parse(
+    localStorage.getItem("safarChatHistory") || "[]"
+);
+
+let tripState = JSON.parse(
+    localStorage.getItem("safarTripState") || "null"
+);
+
+function saveSafarMemory() {
+    localStorage.setItem(
+        "safarChatHistory",
+        JSON.stringify(chatHistory)
+    );
+
+    localStorage.setItem(
+        "safarTripState",
+        JSON.stringify(tripState)
+    );
+}
+
+// Restore previous conversation after page refresh
+function restoreChatHistory() {
+    chatHistory.forEach(item => {
+        addMessage(
+            item.content,
+            item.role === "user" ? "user" : "bot"
+        );
+    });
+}
+
+restoreChatHistory();
+
+
 /* =========================
   AI CHATBOX
 ========================= */
@@ -71,26 +110,31 @@ chatInput.addEventListener("keydown", (event) => {
 });
 
 
+
 async function sendChat() {
 
-    const message =
-        chatInput.value.trim();
+    const message = chatInput.value.trim();
 
     if (!message) return;
 
-
-    /* USER MESSAGE */
-
+    // Display user message
     addMessage(message, "user");
 
     chatInput.value = "";
 
+    // Add user message to conversation history
+    chatHistory.push({
+        role: "user",
+        content: message
+    });
 
-    /* TYPING */
+    saveSafarMemory();
 
-    const typing =
-        addMessage("SafarAI is thinking...", "bot");
-
+    // Show typing indicator
+    const typing = addMessage(
+        "SafarAI is thinking...",
+        "bot"
+    );
 
     try {
 
@@ -104,25 +148,52 @@ async function sendChat() {
                 },
 
                 body: JSON.stringify({
-                    message: message
+
+                    message: message,
+
+                    history: chatHistory,
+
+                    tripState: tripState
+
                 })
             }
         );
-
 
         const data = await response.json();
 
         typing.remove();
 
         if (!response.ok) {
-            addMessage(data.error || "Something went wrong.", "bot");
+            addMessage(
+                data.error || "Something went wrong.",
+                "bot"
+            );
             return;
         }
 
+        // Display AI response
         addMessage(data.reply, "bot");
 
+        // Save AI response in conversation history
+        chatHistory.push({
+            role: "assistant",
+            content: data.reply
+        });
+
+        // Update trip information if backend returns it
+        if (data.tripState) {
+            tripState = data.tripState;
+        }
+
+        // Keep only the latest 20 messages
+        chatHistory = chatHistory.slice(-20);
+
+        // Save everything
+        saveSafarMemory();
 
     } catch (error) {
+
+        console.error("Chat error:", error);
 
         typing.remove();
 
@@ -134,6 +205,8 @@ async function sendChat() {
     }
 
 }
+
+
 
 
 /* ADD MESSAGE */
